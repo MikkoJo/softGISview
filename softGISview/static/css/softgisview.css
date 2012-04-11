@@ -4,3 +4,57 @@
 .softgis_view .base_textcolor {
     color: #2B9C40;
 }
+
+#content {
+    margin-left: 30px;
+}
+
+#content table {
+    margin: 5px 0;
+}
+
+.select_table td {
+    text-align: center;
+}
+.select_table tr td:first-child {
+    text-align: left;
+}
+
+.legend {
+    font-size: 0.7em;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+.legend td {
+    border: 1px solid black;
+    width: 40px;
+}
+
+.legend tr td:first-child {
+    border: none;
+    width: auto;
+}
+
+.legend th {
+    text-align: left;
+}
+
+.legend_walk {
+    background-color: #1B9E77;
+}
+.legend_public {
+    background-color: #D95F02;
+}
+.legend_car {
+    background-color: #7570B3;
+}
+.legend_alone {
+    background-color: #FBB4AE;
+}
+.legend_friends {
+    background-color: #B3CDE3;
+}
+.legend_adults {
+    background-color: #CCEBC5;
+}
+

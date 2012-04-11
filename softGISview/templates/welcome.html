@@ -25,13 +25,158 @@ softgis_view base_map
 </div>
 {% endblock header %}
 
+{% block content %}
+    <h2>
+        {% trans 'Select points' %}
+    </h2>
+    <div id="form_area">
+        <table class="select_table">
+        <tr>
+            <th>&nbsp;</th>
+            <th class="positive">
+                {% trans 'Positive' %}
+            </th>
+            <th class="negative">
+                {% trans 'Negative' %}
+            </th>
+        </tr>            
+        <tr class="social">
+            <td>
+                {% trans 'Social' %}
+            </td>
+            <td>
+                <input type="checkbox" name="show" value="atmosphereGood"/>
+            </td>            
+            <td>
+                <input type="checkbox" name="show" value="atmosphereBad" />
+            </td>            
+        </tr>
+        <tr class="doing">
+            <td>
+                {% trans 'Doing things' %}
+            </td>
+            <td>
+                <input type="checkbox" name="show" value="thingsGood"/>
+            </td>            
+            <td>
+                <input type="checkbox" name="show" value="thingsBad"/>
+            </td>            
+        </tr>
+        <tr class="feel">
+            <td>
+                {% trans 'Feeling' %}
+            </td>
+            <td>
+                <input type="checkbox" name="show" value="feelGood"/>
+            </td>            
+            <td>
+                <input type="checkbox" name="show" value="feelBad"/>
+            </td>            
+        </tr>
+        </table>
+        <table class="color_select">
+            <tr class="">
+                <td>
+                    {% trans 'Visualize points by type' %}
+                </td>
+                <td>
+                    <input type="radio" name="visual_type" value="type"/>
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    {% trans 'Visualize points by transport method' %}
+                </td>
+                <td>
+                    <input type="radio" name="visual_type" value="transport"/>
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    {% trans 'Visualize points by reachability' %}
+                </td>
+                <td>
+                    <input type="radio" name="visual_type" value="reach"/>
+                </td>
+            </tr>
+        </table>
+        <h3>
+            {% trans 'Legend' %}
+        </h3>
+        <table class="legend">
+            <tr>
+                <th colspan="2">
+                    {% trans 'Transport method' %}
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    {% trans 'walking or by bike' %}
+                </td>
+                <td class="legend_walk">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% trans 'by public transportation ' %}
+                </td>
+                <td class="legend_public">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% trans 'by car ' %}
+                </td>
+                <td class="legend_car">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    {% trans 'Reachability' %}
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    {% trans 'alone' %}
+                </td>
+                <td class="legend_alone">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% trans 'with friends' %}
+                </td>
+                <td class="legend_friends">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% trans 'with adults' %}
+                </td>
+                <td class="legend_adults">
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+
 {% block javascript %}
     <script src="http://openlayers.org/api/OpenLayers.js"></script>
     <script type="text/javascript" src="{% url map_js map_slug_name='suomi' %}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
+    <script type="text/javascript">
+        var feat_data = {% include 'feat_data.json' %};
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            create_map('map', function() {map.setCenter(new OpenLayers.LonLat(328867.166201, 6820011.7771568), 2)}); 
+            create_map('map', init); 
          });
     </script>
 {% endblock javascript %}
