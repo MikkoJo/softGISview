@@ -44,7 +44,7 @@ function init() {
     // Center map to Tampere
     map.addLayer(pointLayer);
 //    map.setCenter(new OpenLayers.LonLat(328867.166201, 6820011.7771568), 2);
-    map.setCenter(new OpenLayers.LonLat(410113.46202689, 6680497.7647955), 2);
+    map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
     get_features(get_features_callback);
     
 }
@@ -53,16 +53,73 @@ var pointLayer_style = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
         {
-            strokeWidth: 2,
-            //graphicName: 'triangle',
+            strokeWidth: 1,
+            pointRadius: 5,
+//            graphicName: 'triangle',
             pointerEvents: "visiblePainted",
             strokeColor: "red",
-            strokeOpacity: 0.9,
+            strokeOpacity: 1,
             fillColor:  "#aaaaaa",
-            fillOpacity: 1
+            fillOpacity: 0.7
         },
 {
             rules: [
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "valuename", // the "foo" feature attribute
+                        value: "feelGood"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#8B2A90",
+                        strokeColor: "#8B2A90",
+                        graphicName: "triangle"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "valuename", // the "foo" feature attribute
+                        value: "feelBad"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#8B2A90",
+                        strokeColor: "#8B2A90",
+                        graphicName: "square"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "valuename", // the "foo" feature attribute
+                        value: "thingsGood"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#6CCFF5",
+                        strokeColor: "#6CCFF5",
+                        graphicName: "triangle"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "valuename", // the "foo" feature attribute
+                        value: "thingsBad"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#6CCFF5",
+                        strokeColor: "#6CCFF5",
+                        graphicName: "square"
+                    }
+                }),
                 new OpenLayers.Rule({
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
@@ -72,8 +129,23 @@ var pointLayer_style = new OpenLayers.Style(
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
-                        fillColor:  "#111111",
-                        strokeColor: "#a405ae"
+                        fillColor:  "#F99F23",
+                        strokeColor: "#F99F23",
+                        graphicName: "triangle"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "valuename", // the "foo" feature attribute
+                        value: "atmosphereBad"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#F99F23",
+                        strokeColor: "#F99F23",
+                        graphicName: "square"
                     }
                 }),
                 new OpenLayers.Rule({

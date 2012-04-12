@@ -19,7 +19,15 @@
 .select_table tr td:first-child {
     text-align: left;
 }
-
+.select_table .social {
+    color: #F99F23;
+}
+.select_table .doing {
+    color: #6CCFF5;
+}
+.select_table .feel {
+    color: #8B2A90;
+}
 .legend {
     font-size: 0.7em;
     border-collapse: separate;
