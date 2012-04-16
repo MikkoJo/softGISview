@@ -56,6 +56,9 @@
 .legend_car {
     background-color: #7570B3;
 }
+.legend_moped {
+    background-color: #E7298A;
+}
 .legend_alone {
     background-color: #FBB4AE;
 }
