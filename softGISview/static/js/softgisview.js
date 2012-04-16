@@ -41,6 +41,7 @@ function get_features_callback(response_data) {
         map.addLayer(mapOverlays[layer]);
     }
     toggleShow();
+    toggleStyle();
  //   map.addLayers(mapOverLays);
 //    pointLayer.addFeatures(features);
 
@@ -128,94 +129,73 @@ var context = {
         }
     }
 }
+var defStyle = {
+    strokeWidth: 1,
+    pointRadius: 5,
+    pointerEvents: "visiblePainted",
+    strokeOpacity: 1,
+    fillOpacity: 0.7
+
+}
 var styles = [];
 styles['feelGood'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
         {
-            strokeWidth: 1,
-            pointRadius: 5,
             graphicName: 'triangle',
-            //display: "${getDisplay}",
-            pointerEvents: "visiblePainted",
             strokeColor: "#8B2A90",
-            strokeOpacity: 1,
             fillColor:  "#8B2A90",
-            fillOpacity: 0.7
-        });
+        }));
         
 styles['feelBad'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
         {
-            strokeWidth: 1,
-            pointRadius: 5,
             graphicName: 'square',
-            //display: "${getDisplay}",
-            pointerEvents: "visiblePainted",
             strokeColor: "#8B2A90",
-            strokeOpacity: 1,
             fillColor:  "#8B2A90",
-            fillOpacity: 0.7
-        });
+        }));
 styles['thingsGood'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
         {
-            strokeWidth: 1,
-            pointRadius: 5,
             graphicName: 'triangle',
-            //display: "${getDisplay}",
-            pointerEvents: "visiblePainted",
             strokeColor: "#6CCFF5",
-            strokeOpacity: 1,
             fillColor:  "#6CCFF5",
-            fillOpacity: 0.7
-        });
+        }));
         
 styles['thingsBad'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
         {
-            strokeWidth: 1,
-            pointRadius: 5,
             graphicName: 'square',
-            //display: "${getDisplay}",
-            pointerEvents: "visiblePainted",
             strokeColor: "#6CCFF5",
-            strokeOpacity: 1,
             fillColor:  "#6CCFF5",
-            fillOpacity: 0.7
-        });
+        }));
 styles['atmosphereGood'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
         {
-            strokeWidth: 1,
-            pointRadius: 5,
             graphicName: 'triangle',
-            //display: "${getDisplay}",
-            pointerEvents: "visiblePainted",
             strokeColor: "#F99F23",
-            strokeOpacity: 1,
             fillColor:  "#F99F23",
-            fillOpacity: 0.7
-        });
+        }));
         
 styles['atmosphereBad'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
         {
-            strokeWidth: 1,
-            pointRadius: 5,
             graphicName: 'square',
-            //display: "${getDisplay}",
-            pointerEvents: "visiblePainted",
             strokeColor: "#F99F23",
-            strokeOpacity: 1,
             fillColor:  "#F99F23",
-            fillOpacity: 0.7
-        });
+        }));
+
 var type_style = new OpenLayers.Style(
         // the first argument is a base symbolizer
         // all other symbolizers in rules will extend this one
