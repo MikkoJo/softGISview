@@ -48,9 +48,17 @@ function get_features_callback(response_data) {
 //    pointLayer.events.unregister("featureadded", undefined, add_popup_to_feature);
 
 
-}function get_features(callback) {
+}
+function get_features(callback) {
     //For test
     callback(feat_data);
+}
+function get_profile_callback(response_data) {
+    $("#school_travel").html(response_data.school_journey.time_to_school+response_data.school_journey.time_from_school );
+}
+function get_profile(callback) {
+    //For test
+    callback(prof_data);
 }
 
 function toggleStyle() {
@@ -111,6 +119,10 @@ function init() {
     $(".color_select :radio").click(toggleStyle);
     get_features(get_features_callback);
     
+}
+
+function create_diagram() {
+    get_profile(get_profile_callback);
 }
 var context = {
     getDisplay: function(feat) {

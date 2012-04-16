@@ -5,7 +5,11 @@ from django.http import HttpResponseBadRequest
 def main(request):
     return render_to_response('welcome.html',
                        context_instance=RequestContext(request))
-    
+
+def trav(request):
+    return render_to_response('travel.html',
+                      context_instance=RequestContext(request))    
+
 def subcontent(request, page_name):
     """
     if request.is_ajax():
