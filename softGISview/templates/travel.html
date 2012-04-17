@@ -2,11 +2,12 @@
 {% load i18n %}
 
 {% block css_extra %}
+    <link href="https://fonts.googleapis.com/css?family=Glegoo|Signika+Negative:300,400|Bitter|Radley|Enriqueta|Ruda" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/softgisview.css" />
 {% endblock css_extra %}
 
 {% block body_class %}
-softgis_view base_page
+softgis_view base_page base_map
 {% endblock %}
 
 {% block header %}
@@ -32,17 +33,17 @@ softgis_view base_page
         <table class="summary">
             <tr><!-- name=time_to_school and name=time_from_school -->
                 <td>{% trans 'Time spent walking or cycling on school yourney' %}</td>
-                <td id="school_travel"></td>
+                <td class="bold" id="school_travel"></td>
                 <td>{% trans 'minutes' %}</td>
             </tr>
             <tr><!-- name=exercise -->
                 <td>{% trans 'Time spent exercising or playing in free time' %}</td>
-                <td id="exercise"></td>
+                <td class="bold" id="exercise"></td>
                 <td>{% trans 'hours' %}</td>
             </tr>
             <tr><!-- name=tv_computer and name=sos_network -->
                 <td>{% trans 'Time spent watching TV' %}</td>
-                <td id="tv"></td>
+                <td class="bold" id="tv"></td>
                 <td>{% trans 'hours' %}</td>
             </tr>
         </table>
@@ -57,8 +58,8 @@ softgis_view base_page
 </div>
 {% endblock main %}
 {% block javascript %}
-<!--    <script src="http://openlayers.org/api/OpenLayers.js"></script>
-    <script type="text/javascript" src="{% url map_js map_slug_name='suomi' %}"></script>-->
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+<!--    <script type="text/javascript" src="{% url map_js map_slug_name='suomi' %}"></script>-->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
     <script type="text/javascript">

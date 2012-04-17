@@ -1,0 +1,53 @@
+{% extends 'base_map.html' %}
+{% load i18n %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/softgisview.css" />
+{% endblock stylesheet %}
+
+{% block body_class %}
+softgis_view base_map
+{% endblock %}
+
+{% block header %}
+<div class="span_left">
+    <div id="city_logo">
+        <div id="city_name" class="base_textcolor" onclick="window.location = '{% url front_page %}'">
+
+        <img alt="pehmogis" src="{{ STATIC_URL }}img/pehmogis-logo.png" height="22" width="82" />
+            {% trans "Children" %}
+
+
+        </div>
+    </div>
+</div>
+<div class="span_right">
+</div>
+{% endblock header %}
+
+{% block content %}
+    <h2>
+        {% trans 'Select School' %}
+    </h2>
+    <select name="school" id="school">
+        <option></option>
+        {% for school in schools %}
+            <option value="{{ school.id }}">{{ school.name }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block javascript %}
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script type="text/javascript" src="{% url map_js map_slug_name='suomi' %}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
+    <script type="text/javascript">
+        var feat_data = {% include 'clean_feat_data.json' %};
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            create_map('map', init_teacher); 
+         });
+    </script>
+{% endblock javascript %}

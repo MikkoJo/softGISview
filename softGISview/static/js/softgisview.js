@@ -51,13 +51,30 @@ function get_features_callback(response_data) {
 }
 function get_features(callback) {
     //For test
+    // TODO: create a proper geojson_rest api call
     callback(feat_data);
 }
 function get_profile_callback(response_data) {
-    $("#school_travel").html(response_data.school_journey.time_to_school+response_data.school_journey.time_from_school );
+    var toSchool = parseFloat(response_data.school_journey.time_to_school),
+        fromSchool = parseFloat(response_data.school_journey.time_from_school),
+        exercise = response_data.activities.exercise,
+        tv_comp = response_data.activities.tv_computer,
+        sos_network = response_data.activities.sos_network;
+    
+    if(isNaN(toSchool)) {
+        toSchool = 0;
+    }
+    if(isNaN(fromSchool)) {
+        fromSchool = 0;
+    }
+    
+    $("#school_travel").html(toSchool + fromSchool);
+    $("#exercise").html(exercise);
+    $("#tv").html(tv_comp + " " + sos_network);
 }
 function get_profile(callback) {
     //For test
+    // TODO: create a proper opensocial_people rest api call
     callback(prof_data);
 }
 
@@ -120,7 +137,10 @@ function init() {
     get_features(get_features_callback);
     
 }
-
+function init_teacher() {
+    map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
+    $('#school').change( function (e) {console.log(e.target.value);})
+}
 function create_diagram() {
     get_profile(get_profile_callback);
 }
@@ -469,3 +489,6 @@ var style_rules = {
     },
     type_style_rule: {}  
 };
+
+//var exercise_map = {
+//}
