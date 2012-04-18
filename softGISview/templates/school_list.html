@@ -29,12 +29,15 @@ softgis_view base_map
     <h2>
         {% trans 'Select School' %}
     </h2>
-    <select name="school" id="school">
-        <option></option>
-        {% for school in schools %}
-            <option value="{{ school.id }}">{{ school.name }}</option>
-        {% endfor %}
-    </select>
+    <form name="schoolSelect">
+        {{ csrf_token }}
+        <select name="school" id="school">
+            <option></option>
+            {% for school in schools %}
+                <option value="{{ school.id }}">{{ school.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
 {% endblock %}
 
 {% block javascript %}

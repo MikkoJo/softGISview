@@ -121,6 +121,28 @@ function toggleShow() {
     */
 }
 
+function submitSchool(schoolID, callback_function) {
+    $.ajax({
+        url: "{% url school_data %}",
+        type: "POST",
+        data: 'value=' + schoolID,
+//        contentType: "application/json",
+        success: function(data) {
+            if(callback_function !== undefined) {
+                callback_function(data);
+            }
+        },
+        error: function(e) {
+            if(callback_function !== undefined) {
+                callback_function(e);
+            }
+        },
+        dataType: "json",
+        beforeSend: function(xhr) {
+            xhr.withCredentials = true;
+        }
+    });
+}
 function init() {
     // Create Layers for different point types
     pointLayer = new OpenLayers.Layer.Vector("Point Layer", {
@@ -137,9 +159,10 @@ function init() {
     get_features(get_features_callback);
     
 }
+
 function init_teacher() {
     map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
-    $('#school').change( function (e) {console.log(e.target.value);})
+    $('#school').change(function (evt) {submitSchool(evt.target.value, submitSchool_callback);});
 }
 function create_diagram() {
     get_profile(get_profile_callback);
