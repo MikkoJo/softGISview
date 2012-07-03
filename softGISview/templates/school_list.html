@@ -30,7 +30,7 @@ softgis_view base_map
         {% trans 'Select School' %}
     </h2>
     <form name="schoolSelect">
-        {{ csrf_token }}
+<!--        {{ csrf_token }}-->
         <select name="school" id="school">
             <option></option>
             {% for school in schools %}
@@ -41,7 +41,7 @@ softgis_view base_map
 {% endblock %}
 
 {% block javascript %}
-    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script type="text/javascript" src="https://softgis.org.aalto.fi/OpenLayers212/OpenLayers.js"></script>
     <script type="text/javascript" src="{% url map_js map_slug_name='suomi' %}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
