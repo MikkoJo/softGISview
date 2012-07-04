@@ -161,6 +161,15 @@ function toggleShow() {
     pointLayer.redraw();
     */
 }
+function submitSchool_callback(response) {
+    console.log(response);
+    var geojson_format = new OpenLayers.Format.GeoJSON();
+    buffersLayer.addFeatures(geojson_format.read(response));
+    // Center at school
+    var school = buffersLayer.getFeaturesByAttribute('type', 'school')[0];
+    map.setCenter(new OpenLayers.LonLat(school.geometry.x,school.geometry.y));
+    
+}
 
 function submitSchool(schoolID, callback_function) {
     $.ajax({
@@ -202,9 +211,14 @@ function init() {
     
 }
 
+var buffersLayer;
 function init_teacher() {
     map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
-    $('#school').change(function (evt) {submitSchool(evt.target.value/*, submitSchool_callback*/);});
+    buffersLayer = new OpenLayers.Layer.Vector("Buffers Layer", {
+                            styleMap: new OpenLayers.StyleMap(travel_style)
+                    });
+    map.addLayer(buffersLayer);
+    $('#school').change(function (evt) {submitSchool(evt.target.value, submitSchool_callback);});
 }
 function create_diagram() {
     get_profile(get_profile_callback);
@@ -555,5 +569,65 @@ var style_rules = {
     type_style_rule: {}  
 };
 
+var travel_style = new OpenLayers.Style(
+        // the first argument is a base symbolizer
+        // all other symbolizers in rules will extend this one
+        {
+            strokeWidth: 1,
+            pointerEvents: "visiblePainted",
+            strokeOpacity: 1,
+            fillOpacity: 0.7
+        },
+        // the second argument will include all rules
+        {
+            rules: [
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.LESS_THAN,
+                        property: "to", // the "foo" feature attribute
+                        value: 25
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#CC00C5",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "to",
+                        lowerBoundary: 25,
+                        upperBoundary: 50
+                    }),
+                    symbolizer: {
+                        fillColor:  "#CCEB00",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "to",
+                        lowerBoundary: 50,
+                        upperBoundary: 75
+                    }),
+                    symbolizer: {
+                        fillColor:  "#00EBC5",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    // apply this rule if no others apply
+                    elseFilter: true,
+                    symbolizer: {
+                        fillColor:  "#AAEBAA",
+                        strokeColor: "#CCEBC5"
+                    }
+                })
+            ]
+        }
+    );
 //var exercise_map = {
 //}
