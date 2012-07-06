@@ -1,0 +1,73 @@
+{
+    "username": "T1329466182.999541R0.683416",
+    "activities": {
+        "org_activi": "1",
+        "outdoor": "1_2_hours",
+        "tv_computer": "more_5_hours",
+        "exercise": "2_3_hours",
+        "sos_network": "2_4_hours"
+    },
+    "first_name": "",
+    "last_name": "",
+    "displayName": "T1329466182.999541R0.683416",
+    "feedback": {
+        "helpful_help": "4",
+        "nervous": "1",
+        "open_feedback": "",
+        "map_cognitive": "1",
+        "easy_map": "4",
+        "too_long": "5",
+        "ask_important": "3",
+        "succesful": "5"
+    },
+    "wellbeing": {
+        "back_ache": "more_than_once_week",
+        "fresh_fruit": "dont_know",
+        "diff_from_others": "dont_know",
+        "weight": "50",
+        "school_friends": "3",
+        "stomach_ache": "about_every_week",
+        "feeling_nervous": "about_every_day",
+        "difficult_to_sleep": "more_than_once_week",
+        "stop_active": "no",
+        "height": "152,5",
+        "why_text": "",
+        "feeling_dizzy": "more_than_once_week",
+        "health": "fair",
+        "other_friends": "10",
+        "what_text": "",
+        "feel_life": "not_very_happy",
+        "feeling_low": "about_every_day",
+        "breakfast": "1_2_mornings",
+        "headache": "more_than_once_week",
+        "irritability_bad_temper": "about_every_day"
+    },
+    "ownevaluationForm": {},
+    "email": {
+        "value": ""
+    },
+    "background": {
+        "have_car": "yes_one",
+        "with_parents": "yes",
+        "bicycle": "yes",
+        "language": "yes",
+        "gender": "girl",
+        "age": "14",
+        "school": "jokiniemen_koulu",
+        "residenttype": "house",
+        "bro_or_sis": "1",
+        "own_room": "yes"
+    },
+    "homeForm": {},
+    "school_journey": {
+        "time_to_school": "3",
+        "time_from_school": "3",
+        "with_school": ["alone", "with_children"],
+        "how_to_text": "",
+        "how_to_school": "walk",
+        "how_from_school": "walk",
+        "alone_allowed": ["walk_ride_clubs", "centre_malls", "parks_sports", "public_trans", "ride_bike", "outside_dark", "walk_ride_friends"],
+        "how_from_text": ""
+    },
+    "id": 2128
+}
