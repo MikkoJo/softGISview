@@ -274,6 +274,7 @@ def school_data(request):
                                     "homes": len(m1000),
                                     "to": m1000_to * 100,
                                     "from": m1000_from * 100,
+                                    "travel": ((m1000_to + m1000_from) / 2) * 100,
                                     "time": t1000,
                                     "name": "1000"
                                     }
@@ -284,6 +285,7 @@ def school_data(request):
                                     "homes": len(m3000),
                                     "to": m3000_to * 100,
                                     "from": m3000_from * 100,
+                                    "travel": ((m3000_to + m3000_from) / 2) * 100,
                                     "time": t3000,
                                     "name": "3000"
                                     }
@@ -294,6 +296,7 @@ def school_data(request):
                                     "homes": len(m5000),
                                     "to": m5000_to * 100,
                                     "from": m5000_from * 100,
+                                    "travel": ((m5000_to + m5000_from) / 2) * 100,
                                     "time": t5000,
                                     "name": "5000"
                                     }
@@ -304,6 +307,7 @@ def school_data(request):
                                     "homes": len(m5001),
                                     "to": m5001_to * 100,
                                     "from": m5001_from * 100,
+                                    "travel": ((m5001_to + m5001_from) / 2) * 100,
                                     "time": t5001,
                                     "name": "5001"
                                     }

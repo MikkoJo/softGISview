@@ -585,36 +585,121 @@ var travel_style = new OpenLayers.Style(
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.LESS_THAN,
-                        property: "to", // the "foo" feature attribute
-                        value: 25
+                        property: "travel", // the "foo" feature attribute
+                        value: 10
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
-                        fillColor:  "#CC00C5",
+                        fillColor:  "#FFF7EC",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "to",
-                        lowerBoundary: 25,
+                        property: "travel",
+                        lowerBoundary: 10,
+                        upperBoundary: 20
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FEE8C8",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "travel",
+                        lowerBoundary: 20,
+                        upperBoundary: 30
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FDD49E",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "travel",
+                        lowerBoundary: 30,
+                        upperBoundary: 40
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FDBB84",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "travel",
+                        lowerBoundary: 40,
                         upperBoundary: 50
                     }),
                     symbolizer: {
-                        fillColor:  "#CCEB00",
+                        fillColor:  "#FC8D59",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "to",
+                        property: "travel",
                         lowerBoundary: 50,
-                        upperBoundary: 75
+                        upperBoundary: 60
                     }),
                     symbolizer: {
-                        fillColor:  "#00EBC5",
+                        fillColor:  "#EF6548",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "travel",
+                        lowerBoundary: 60,
+                        upperBoundary: 70
+                    }),
+                    symbolizer: {
+                        fillColor:  "#D7301F",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "travel",
+                        lowerBoundary: 70,
+                        upperBoundary: 80
+                    }),
+                    symbolizer: {
+                        fillColor:  "#990000",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "travel",
+                        lowerBoundary: 80,
+                        upperBoundary: 90
+                    }),
+                    symbolizer: {
+                        fillColor:  "#B30000",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.GREATER_THAN,
+                        property: "travel", // the "foo" feature attribute
+                        value: 90
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#7F0000",
                         strokeColor: "#CCEBC5"
                     }
                 }),
