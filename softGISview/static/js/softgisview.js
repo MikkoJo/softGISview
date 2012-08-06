@@ -194,6 +194,27 @@ function submitSchool(schoolID, callback_function) {
         }
     });
 }
+function onPopupClose(evt) {
+    selectControl.unselect(selectedFeature);
+}
+function onFeatureSelect(feature) {
+    selectedFeature = feature;
+    var popup = new OpenLayers.Popup.FramedCloud("popup", 
+                             feature.geometry.getBounds().getCenterLonLat(),
+                             null,
+                             "<div style='font-size:.8em'>Homes: " + feature.attributes.homes +
+                             "<br>Travel: " + Math.round(feature.attributes.travel*100)/100 +
+                             " %<br>Time: " + Math.round(feature.attributes.time*100)/100 +" min</div>",
+                             null, true, onPopupClose);
+    feature.popup = popup;
+    map.addPopup(popup);
+}
+function onFeatureUnselect(feature) {
+    map.removePopup(feature.popup);
+    feature.popup.destroy();
+    feature.popup = null;
+}    
+
 function init() {
     // Create Layers for different point types
     pointLayer = new OpenLayers.Layer.Vector("Point Layer", {
@@ -211,13 +232,20 @@ function init() {
     
 }
 
-var buffersLayer;
+var buffersLayer,
+    selectControl;
 function init_teacher() {
     map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
     buffersLayer = new OpenLayers.Layer.Vector("Buffers Layer", {
                             styleMap: new OpenLayers.StyleMap(travel_style)
                     });
     map.addLayer(buffersLayer);
+    selectControl = new OpenLayers.Control.SelectFeature(buffersLayer, {
+                                                         onSelect: onFeatureSelect,
+                                                         onUnselect: onFeatureUnselect     
+    });
+    map.addControl(selectControl);
+    selectControl.activate();
     $('#school').change(function (evt) {submitSchool(evt.target.value, submitSchool_callback);});
 }
 function create_diagram() {
