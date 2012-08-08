@@ -1,0 +1,138 @@
+{% load i18n %}
+
+{% block content %}
+    <h2>
+        {% trans 'Select points' %}
+    </h2>
+    <div id="form_area">
+        <input type="hidden" id="school" value="{{ school_id }}" />
+        <table class="select_table">
+        <tr class="competitive">
+            <td>
+                {% trans 'Competitive sports' %}
+            </td>
+            <td>
+                <input type="checkbox" name="show" value="competitive"/>
+            </td>            
+        </tr>
+        <tr class="moving">
+            <td>
+                {% trans 'Moving around' %}
+            </td>
+            <td>
+                <input type="checkbox" name="show" value="moving"/>
+            </td>            
+        </tr>
+        <tr class="recreational">
+            <td>
+                {% trans 'Recreational sports' %}
+            </td>
+            <td>
+                <input type="checkbox" name="show" value="recreational"/>
+            </td>            
+        </tr>
+        </table>
+        <table class="color_select">
+            <tr class="">
+                <td>
+                    {% trans 'Visualize points by type' %}
+                </td>
+                <td>
+                    <input type="radio" name="visual_type" value="type" checked="checked"/>
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    {% trans 'Visualize points by transport method' %}
+                </td>
+                <td>
+                    <input type="radio" name="visual_type" value="transport"/>
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    {% trans 'Visualize points by reachability' %}
+                </td>
+                <td>
+                    <input type="radio" name="visual_type" value="reach"/>
+                </td>
+            </tr>
+        </table>
+        <h3>
+            {% trans 'Legend' %}
+        </h3>
+        <table class="legend">
+            <tr>
+                <th colspan="2">
+                    {% trans 'Transport method' %}
+                </th>
+            </tr>
+            <tr>
+                <td class="legend_walk">
+                    &nbsp;
+                </td>
+                <td>
+                    {% trans 'walking or by bike' %}
+                </td>
+            </tr>
+            <tr>
+                <td class="legend_public">
+                    &nbsp;
+                </td>
+                <td>
+                    {% trans 'by public transportation' %}
+                </td>
+            </tr>
+            <tr>
+                <td class="legend_car">
+                    &nbsp;
+                </td>
+                <td>
+                    {% trans 'by car ' %}
+                </td>
+            </tr>
+            <tr>
+                <td class="legend_moped">
+                    &nbsp;
+                </td>
+                <td>
+                    {% trans 'by moped' %}
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    {% trans 'Reachability' %}
+                </th>
+            </tr>
+            <tr>
+                <td class="legend_alone">
+                    &nbsp;
+                </td>        
+                <td>
+                    {% trans 'alone' %}
+                </td>
+            </tr>
+            <tr>
+                <td class="legend_friends">
+                    &nbsp;
+                </td>
+                <td>
+                    {% trans 'with friends' %}
+                </td>
+            </tr>
+            <tr>
+                <td class="legend_adults">
+                    &nbsp;
+                </td>
+                <td>
+                    {% trans 'with adults' %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        {% include 'prev_button.html' with prev="school_list" %}
+        {% include 'next_button.html' with next="screen_time" %}
+    </div>
+{% endblock %}
+

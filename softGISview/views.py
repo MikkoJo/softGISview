@@ -52,7 +52,7 @@ def school_data(request):
                                    id__in=list(home_ids)).filter(user_id__in=list(user_ids))
     
     print len(homes)
-    #Calculate the buffer values
+    #Calculate the buffer valuesuser_ids = users.values_list('user_id', flat=True)
     m1000 = homes.filter(geometry__distance_lt=(school.coordinates, D(m=1000)))
     
     print (len(m1000))
@@ -321,11 +321,81 @@ def school_data(request):
                              
     return HttpResponse(json.dumps(featurecollection))  
     
-def subcontent(request, page_name):
+def subcontent(request, page_name, file_type):
     """
     if request.is_ajax():
-        return HttpResponse('You requested: %s' % page_name)
+        return HttpResponse(    if not request.is_ajax():
+        return HttpResponseBadRequest
+
+    school = Schools.objects.get(id__exact=request.POST.get('value', ''))
+    
+#    js_school = school.values_list('name')[0][0]
+    js_school = school.name
+    js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #Get respondants for school
+    users = Person.objects.filter(time__expire_time=None).filter(
+                                  json_data__json_string__contains='"school": "%s"' % js_school)
+    
+    user_ids = users.values_list('user_id', flat=True)
+'You requested: %s' % page_name)
     else:
         return HttpResponseBadRequest
-    """        
-    return HttpResponse('You requested: %s' % page_name)
+    """
+    school_id = request.POST.get('value', '')
+    return render_to_response(page_name + "." + file_type,
+               {"school_id": school_id},        
+               context_instance=RequestContext(request))
+
+    #return HttpResponse('You requested: %s' % page_name)
+
+def get_free_time_features(request):
+
+    if not request.is_ajax():
+        return HttpResponseBadRequest
+
+    school = Schools.objects.get(id__exact=request.POST.get('value', ''))
+    
+#    js_school = school.values_list('name')[0][0]
+    js_school = school.name
+    js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #Get respondants for school
+    users = Person.objects.filter(time__expire_time=None).filter(
+                                  json_data__json_string__contains='"school": "%s"' % js_school)
+    
+    user_ids = users.values_list('user_id', flat=True)
+    
+    # Get correct features
+    properties = Property.objects.filter(expire_time=None).filter(json_string__contains='"valuename": "thingsGood"')
+    
+    # Filter to get only features from current school
+    properties = properties.filter(feature__user_id__in=user_ids)
+    
+    cs = properties.filter(json_string__contains='"competitive_sports"')
+    ma = properties.filter(json_string__contains='"moving_around"')
+    rs = properties.filter(json_string__contains='"recreational_sports"')
+    
+    features = []
+    
+    for f in cs:
+        f_json = f.geojson()
+        f_json['properties']['valuename'] = 'competitive'
+        features.append(f_json)
+    
+    for f in ma:
+        f_json = f.geojson()
+        f_json['properties']['valuename'] = 'moving'
+        features.append(f_json)
+
+    for f in rs:
+        f_json = f.geojson()
+        f_json['properties']['valuename'] = 'recreational'
+        features.append(f_json)
+    
+    featurecollection = {
+             "type": "FeatureCollection",
+             "crs": {"type": "EPSG", "properties": {"code": school.coordinates.srid}},
+             "features": features
+             }
+
+    return HttpResponse(json.dumps(featurecollection))  
+    

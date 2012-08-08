@@ -34,13 +34,13 @@
     border-spacing: 2px;
 }
 .legend td {
-    border: 1px solid black;
-    width: 40px;
+    border: none;
+    width: auto;
 }
 
 .legend tr td:first-child {
-    border: none;
-    width: auto;
+    border: 1px solid black;
+    width: 40px;
 }
 
 .legend th {
@@ -71,4 +71,25 @@
 
 .bold {
     font-weight: bold;
+}
+
+.nextButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10%;
+    width: 6em;
+}
+
+.prevButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10%;
+    width: 6em;
+}
+
+.nextButton:first-child {
+    margin-left: 50%;
+}
+select#school {
+    width: 100%;
 }

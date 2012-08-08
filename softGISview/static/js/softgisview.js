@@ -90,10 +90,33 @@ function get_features_callback(response_data) {
 
 
 }
-function get_features(callback) {
+function get_features(callback_function) {
     //For test
     // TODO: create a proper geojson_rest api call
-    callback(feat_data);
+    //callback(feat_data);
+    
+    $.ajax({
+        url: softgisview.settings.page_url +"free_time",
+        //url: "/softgisview/school_data",
+        type: "POST",
+        data: 'value=' + $("#school")[0].value,
+//        contentType: "application/json",
+        success: function(data) {
+            if(callback_function !== undefined) {
+                callback_function(data);
+            }
+        },
+        error: function(e) {
+            if(callback_function !== undefined) {
+                callback_function(e);
+            }
+        },
+        dataType: "json",
+        beforeSend: function(xhr) {
+            xhr.withCredentials = true;
+        }
+    });
+    
 }
 function get_profile_callback(response_data) {
     var toSchool = parseFloat(response_data.school_journey.time_to_school),
@@ -126,7 +149,7 @@ function toggleStyle() {
         mapOverlays[i].styleMap = 
             new OpenLayers.StyleMap(
                 new OpenLayers.Style(
-                    mapOverlays[i].styleMap.styles.default.defaultStyle,
+                    mapOverlays[i].styleMap.styles['default'].defaultStyle,
                     style_rules[t[0].value + "_style_rule"]));
         mapOverlays[i].redraw();
     }
@@ -141,7 +164,7 @@ function toggleShow() {
     t.push(field.value);
     });
     console.log(t);
-    for(layer in mapOverlays) {
+    for(var layer in mapOverlays) {
         if($.inArray(layer, t) !== -1) {
             mapOverlays[layer].setVisibility(true);
         }
@@ -161,20 +184,51 @@ function toggleShow() {
     pointLayer.redraw();
     */
 }
+function update_legend() {
+    var layerName = $(".color_select :radio").serializeArray()[0].value;
+    var layer = map.getLayersByName(layerName)[0];
+    $("#legendTable tr").each(function(index) {
+        var r = layer.styleMap.styles["default"].rules;
+        console.log(r[index].name);
+        //console.log(r[index].id);
+        console.log(r[index].symbolizer.fillColor);
+        $(this).children(".legend_color").css("background-color", r[index].symbolizer.fillColor);
+        $(this).children(".legend_label").html(r[index].name);
+
+    });
+    if($("#legendContainer").css("visibility") === "hidden") {
+        $("#legendContainer").css("visibility", "visible");
+    }
+
+}
+
+function change_layer() {
+    $(".color_select :radio").each(function() {
+      var name = this.value;
+      var checked = this.checked;
+      map.getLayersByName(name)[0].setVisibility(checked); 
+    });
+    update_legend();
+}
 function submitSchool_callback(response) {
     console.log(response);
     var geojson_format = new OpenLayers.Format.GeoJSON();
-    buffersLayer.addFeatures(geojson_format.read(response));
+    travel_buffersLayer.addFeatures(geojson_format.read(response));
+    travel_time_buffersLayer.addFeatures(geojson_format.read(response));
     // Center at school
-    var school = buffersLayer.getFeaturesByAttribute('type', 'school')[0];
+    var school = travel_buffersLayer.getFeaturesByAttribute('type', 'school')[0];
     map.setCenter(new OpenLayers.LonLat(school.geometry.x,school.geometry.y));
+    if($(".color_select").css("visibility") === "hidden") {
+        $(".color_select").css("visibility", "visible");
+    }
+    update_legend();
     
 }
 
 function submitSchool(schoolID, callback_function) {
     $.ajax({
-//        url: "{% url school_data %}",
-        url: "/softgisview/school_data",
+        url: softgisview.settings.school_data_url,
+        //url: "/softgisview/school_data",
         type: "POST",
         data: 'value=' + schoolID,
 //        contentType: "application/json",
@@ -194,13 +248,53 @@ function submitSchool(schoolID, callback_function) {
         }
     });
 }
+function free_time_callback(response) {
+    console.log(response);
+    travel_buffersLayer.setVisibility(false);
+    travel_time_buffersLayer.setVisibility(false);
+    $("#content").html(response);
+    $('.select_table :checkbox').click(toggleShow);
+    $(".color_select :radio").click(toggleStyle);
+    $(".navigationButton").click(function () {
+            console.log(this.value);
+            change_page(this.value, this.value + "_callback");
+        }
+        );
+    get_features(get_features_callback);
+    
+}
+function change_page(page_name, callback_function) {
+    
+    $.ajax({
+        url: softgisview.settings.page_url +"content/html/"  + page_name,
+        //url: "/softgisview/school_data",
+        type: "POST",
+        data: 'value=' + $("#school")[0].value,
+//        contentType: "application/json",
+        success: function(data) {
+            if(callback_function !== undefined && typeof window[callback_function] === 'function') {
+                window[callback_function](data);
+            }
+        },
+        error: function(e) {
+            if(callback_function !== undefined && typeof window[callback_function] === 'function') {
+                window[callback_function](e);
+            }
+        },
+        dataType: "html",
+        beforeSend: function(xhr) {
+            xhr.withCredentials = true;
+        }
+    });
+}
 function onPopupClose(evt) {
     selectControl.unselect(selectedFeature);
 }
 function onFeatureSelect(feature) {
     selectedFeature = feature;
     var popup = new OpenLayers.Popup.FramedCloud("popup", 
-                             feature.geometry.getBounds().getCenterLonLat(),
+//                             feature.geometry.getBounds().getCenterLonLat(),
+                             map.getLonLatFromPixel(this.handlers.feature.down),
                              null,
                              "<div style='font-size:.8em'>Homes: " + feature.attributes.homes +
                              "<br>Travel: " + Math.round(feature.attributes.travel*100)/100 +
@@ -232,21 +326,33 @@ function init() {
     
 }
 
-var buffersLayer,
+var travel_buffersLayer,
+    travel__time_buffersLayer,
     selectControl;
 function init_teacher() {
     map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
-    buffersLayer = new OpenLayers.Layer.Vector("Buffers Layer", {
+    travel_buffersLayer = new OpenLayers.Layer.Vector("Travel Buffers Layer", {
                             styleMap: new OpenLayers.StyleMap(travel_style)
                     });
-    map.addLayer(buffersLayer);
-    selectControl = new OpenLayers.Control.SelectFeature(buffersLayer, {
+    travel_time_buffersLayer = new OpenLayers.Layer.Vector("Travel Time Buffers Layer", {
+                            styleMap: new OpenLayers.StyleMap(travel_time_style),
+                            visibility: false
+                    });
+    map.addLayers([travel_buffersLayer,travel_time_buffersLayer]);
+    selectControl = new OpenLayers.Control.SelectFeature([travel_buffersLayer, travel_time_buffersLayer], {
                                                          onSelect: onFeatureSelect,
-                                                         onUnselect: onFeatureUnselect     
+                                                         onUnselect: onFeatureUnselect,
+                                                         toggle: true    
     });
     map.addControl(selectControl);
     selectControl.activate();
+    $(".color_select :radio").click(change_layer);
     $('#school').change(function (evt) {submitSchool(evt.target.value, submitSchool_callback);});
+    $(".navigationButton").click(function () {
+            console.log(this.value);
+            change_page(this.value, this.value + "_callback");
+        }
+        );
 }
 function create_diagram() {
     get_profile(get_profile_callback);
@@ -333,6 +439,36 @@ styles['atmosphereBad'] = new OpenLayers.Style(
             graphicName: 'square',
             strokeColor: "#F99F23",
             fillColor:  "#F99F23",
+        }));
+
+styles['competitive'] = new OpenLayers.Style(
+        // the first argument is a base symbolizer
+        // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
+        {
+            graphicName: 'square',
+            strokeColor: "#F99F23",
+            fillColor:  "#F99F23",
+        }));
+
+styles['moving'] = new OpenLayers.Style(
+        // the first argument is a base symbolizer
+        // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
+        {
+            graphicName: 'triangle',
+            strokeColor: "#6CCFF5",
+            fillColor:  "#6CCFF5",
+        }));
+
+styles['recreational'] = new OpenLayers.Style(
+        // the first argument is a base symbolizer
+        // all other symbolizers in rules will extend this one
+        OpenLayers.Util.applyDefaults(OpenLayers.Util.applyDefaults({}, defStyle),
+        {
+            graphicName: 'circle',
+            strokeColor: "#8B2A90",
+            fillColor:  "#8B2A90",
         }));
 
 var type_style = new OpenLayers.Style(
@@ -604,12 +740,14 @@ var travel_style = new OpenLayers.Style(
             strokeWidth: 1,
             pointerEvents: "visiblePainted",
             strokeOpacity: 1,
+//            fillOpacity: 1
             fillOpacity: 0.7
         },
         // the second argument will include all rules
         {
             rules: [
                 new OpenLayers.Rule({
+                    name: "Alle 10%",
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.LESS_THAN,
@@ -623,6 +761,7 @@ var travel_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "10 - 20%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -630,11 +769,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 20
                     }),
                     symbolizer: {
-                        fillColor:  "#FEE8C8",
+                        fillColor:  "#FFFFCC",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "20 - 30%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -642,11 +782,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 30
                     }),
                     symbolizer: {
-                        fillColor:  "#FDD49E",
+                        fillColor:  "#FFEDA0",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "30 - 40%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -654,11 +795,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 40
                     }),
                     symbolizer: {
-                        fillColor:  "#FDBB84",
+                        fillColor:  "#FED976",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "40 - 50%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -666,11 +808,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 50
                     }),
                     symbolizer: {
-                        fillColor:  "#FC8D59",
+                        fillColor:  "#FEB24C",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "50 - 60%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -678,11 +821,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 60
                     }),
                     symbolizer: {
-                        fillColor:  "#EF6548",
+                        fillColor:  "#FD8D3C",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "60 - 70%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -690,11 +834,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 70
                     }),
                     symbolizer: {
-                        fillColor:  "#D7301F",
+                        fillColor:  "#FC4E2A",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "70 - 80%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -702,11 +847,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 80
                     }),
                     symbolizer: {
-                        fillColor:  "#990000",
+                        fillColor:  "#E31A1C",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "80 - 90%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
@@ -714,11 +860,12 @@ var travel_style = new OpenLayers.Style(
                         upperBoundary: 90
                     }),
                     symbolizer: {
-                        fillColor:  "#B30000",
+                        fillColor:  "#BD0026",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "Yli 90%",
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.GREATER_THAN,
@@ -727,11 +874,168 @@ var travel_style = new OpenLayers.Style(
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
-                        fillColor:  "#7F0000",
+                        fillColor:  "#800026",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: "Muu",
+                    // apply this rule if no others apply
+                    elseFilter: true,
+                    symbolizer: {
+                        fillColor:  "#AAEBAA",
+                        strokeColor: "#CCEBC5"
+                    }
+                })
+            ]
+        }
+    );
+var travel_time_style = new OpenLayers.Style(
+        // the first argument is a base symbolizer
+        // all other symbolizers in rules will extend this one
+        {
+            strokeWidth: 1,
+            pointerEvents: "visiblePainted",
+            strokeOpacity: 1,
+            fillOpacity: 0.7
+        },
+        // the second argument will include all rules
+        {
+            rules: [
+                new OpenLayers.Rule({
+                    name: "Alle 5 minuuttia",
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.LESS_THAN,
+                        property: "time", // the "foo" feature attribute
+                        value: 5
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#FFF7EC",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "5 - 10 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 5,
+                        upperBoundary: 10
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FFFFCC",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "10 - 15 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 10,
+                        upperBoundary: 15
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FFEDA0",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "15 - 20 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 15,
+                        upperBoundary: 20
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FED976",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "20 - 25 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 20,
+                        upperBoundary: 25
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FEB24C",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "25 - 30 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 25,
+                        upperBoundary: 30
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FD8D3C",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "30 - 35 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 30,
+                        upperBoundary: 35
+                    }),
+                    symbolizer: {
+                        fillColor:  "#FC4E2A",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "35 - 40 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 35,
+                        upperBoundary: 40
+                    }),
+                    symbolizer: {
+                        fillColor:  "#E31A1C",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "40 - 45 minuuttia",
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "time",
+                        lowerBoundary: 40,
+                        upperBoundary: 45
+                    }),
+                    symbolizer: {
+                        fillColor:  "#BD0026",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "Yli 45 minuuttia",
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.GREATER_THAN,
+                        property: "time", // the "foo" feature attribute
+                        value: 45
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#800026",
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "Muu",
                     // apply this rule if no others apply
                     elseFilter: true,
                     symbolizer: {
