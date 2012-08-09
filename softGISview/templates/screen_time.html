@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% block content %}
+    <h2>
+        {% trans 'Ruutuaika' %}
+    </h2>
+    <input type="hidden" id="school" value="{{ school_id }}" />
+    <div id="charts">
+        <div id="screen_time_chart_1"></div>
+        <div id="screen_time_chart_2"></div>
+        <div id="screen_time_chart_3"></div>
+        <div id="screen_time_chart_4"></div>
+    </div>
+    <div>
+        {% include 'prev_button.html' with prev="time_classes" %}
+    </div>
+
+{% endblock %}

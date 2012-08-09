@@ -210,6 +210,7 @@ function change_layer() {
     });
     update_legend();
 }
+
 function submitSchool_callback(response) {
     console.log(response);
     var geojson_format = new OpenLayers.Format.GeoJSON();
@@ -249,7 +250,6 @@ function submitSchool(schoolID, callback_function) {
     });
 }
 function free_time_callback(response) {
-    console.log(response);
     travel_buffersLayer.setVisibility(false);
     travel_time_buffersLayer.setVisibility(false);
     $("#content").html(response);
@@ -263,6 +263,139 @@ function free_time_callback(response) {
     get_features(get_features_callback);
     
 }
+
+var ajaxDataRenderer = function(url, plot, options) {
+
+    var ret = null;
+    $.ajax({
+        url: softgisview.settings.page_url + url,
+        //url: "/softgisview/school_data",
+        type: "POST",
+        async: false,
+        data: 'value=' + $("#school")[0].value,
+//        contentType: "application/json",
+        success: function(data) {
+//            if(callback_function !== undefined && typeof window[callback_function] === 'function') {
+//                window[callback_function](data);
+//            }
+            ret = data;
+        },
+        error: function(e) {
+//            if(callback_function !== undefined && typeof window[callback_function] === 'function') {
+//                window[callback_function](e);
+//            }
+        },
+        dataType: "json",
+        beforeSend: function(xhr) {
+            xhr.withCredentials = true;
+        }
+    });
+    return ret;
+}
+function time_classes_callback(response) {
+//    travel_buffersLayer.setVisibility(false);
+//    travel_time_buffersLayer.setVisibility(false);
+    $("#content").html(response);
+    var s1 = [20,29,5,15,31];
+    var ticks = ['yli 7h', '4-6h', '2-3h', 'alle 1h', 'ei lainkaan'];
+//    var ticks = ['a', 'b', 'c', 'd', 'e'];
+    var plot1 = $.jqplot('time_use_chart', 'time_class', {
+        dataRenderer: ajaxDataRenderer,
+        dataRendererOptions: {
+            callback_function: 'jsonurl'
+        },
+        title: "Ajankäyttö",
+        // The "seriesDefaults" option is an options object that will
+        // be applied to all series in the chart.
+        seriesDefaults:{
+            renderer:$.jqplot.BarRenderer,
+            rendererOptions: {
+                fillToZero: true,
+                varyBarColor: true
+//                barPadding: 18,
+//                barMargin: 30
+            }
+        },
+        axes: {
+            // Use a category axis on the x axis and use our custom ticks.
+            xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: ticks
+            },
+            // Pad the y axis just a little so bars can get close to, but
+            // not touch, the grid boundaries.  1.2 is the default padding.
+            yaxis: {
+                pad: 1.05,
+                tickOptions: {formatString: '%d%'}
+            }
+        }        
+        });
+    $(".navigationButton").click(function () {
+            console.log(this.value);
+            change_page(this.value, this.value + "_callback");
+        }
+        );
+    
+}
+
+function screen_time_callback(response) {
+//    travel_buffersLayer.setVisibility(false);
+//    travel_time_buffersLayer.setVisibility(false);
+    $("#content").html(response);
+    var s1 = [['Yli 2h',40],['Alle 2h',60]];
+    var s2 = [['Yli 2h',23],['Alle 2h',77]];
+    var s3 = [['Yli 2h',10],['Alle 2h',90]];
+    var s4 = [['Yli 2h',49],['Alle 2h',51]];
+    var serDefaults = {
+            renderer:$.jqplot.PieRenderer,
+            rendererOptions: {
+                showDataLabels: true
+            }
+        };
+//    var s2 = [[23],[77]];
+//    var ticks = ['yli 7h', '4-6h', '2-3h', 'alle 1h', 'ei lainkaan'];
+//    var ticks = ['a', 'b', 'c', 'd', 'e'];
+    var plot1 = $.jqplot('screen_time_chart_1', [s1], {
+        title: {text: "tv, dvd ja pelaaminen, tytöt",
+                fontSize: '0.9em'
+        },
+        // The "seriesDefaults" option is an options object that will
+        // be applied to all series in the chart.
+        seriesDefaults: serDefaults
+        });
+    var plot2 = $.jqplot('screen_time_chart_2', [s2], {
+        title: {text: "tv, dvd ja pelaaminen, pojat",
+                fontSize: '0.9em'
+        },
+        // The "seriesDefaults" option is an options object that will
+        // be applied to all series in the chart.
+        seriesDefaults: serDefaults,
+        legend: { show:true, location: 'nw', placement: 'outside' }
+        });
+    var plot3 = $.jqplot('screen_time_chart_3', [s3], {
+        title: {text: "sosiaalinen media, tytöt",
+                fontSize: '0.9em'
+        },
+        // The "seriesDefaults" option is an options object that will
+        // be applied to all series in the chart.
+        seriesDefaults: serDefaults
+        });
+    var plot4 = $.jqplot('screen_time_chart_4', [s4], {
+        title: {text: "sosiaalinen media, pojat",
+                fontSize: '0.9em'
+        },
+        // The "seriesDefaults" option is an options object that will
+        // be applied to all series in the chart.
+        seriesDefaults: serDefaults
+        });
+    $(".navigationButton").click(function () {
+            console.log(this.value);
+            change_page(this.value, this.value + "_callback");
+        }
+        );
+    
+}
+
 function change_page(page_name, callback_function) {
     
     $.ajax({
@@ -330,6 +463,7 @@ var travel_buffersLayer,
     travel__time_buffersLayer,
     selectControl;
 function init_teacher() {
+    $.jqplot.config.enablePlugins = true;
     map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
     travel_buffersLayer = new OpenLayers.Layer.Vector("Travel Buffers Layer", {
                             styleMap: new OpenLayers.StyleMap(travel_style)

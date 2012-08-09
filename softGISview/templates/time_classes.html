@@ -1,0 +1,14 @@
+{% load i18n %}
+
+{% block content %}
+    <h2>
+        {% trans 'Ajankäyttö' %}
+    </h2>
+    <input type="hidden" id="school" value="{{ school_id }}" />
+    <div id="time_use_chart"></div>
+    <div>
+        {% include 'prev_button.html' with prev="free_time" %}
+        {% include 'next_button.html' with next="screen_time" %}
+    </div>
+
+{% endblock %}

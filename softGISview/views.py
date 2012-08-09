@@ -11,6 +11,7 @@ from geojson_rest.models import Property
 from opensocial_people.models import Person
 
 import json
+from django.core.context_processors import request
 
 
 def main(request):
@@ -397,5 +398,56 @@ def get_free_time_features(request):
              "features": features
              }
 
-    return HttpResponse(json.dumps(featurecollection))  
+    return HttpResponse(json.dumps(featurecollection))
+
+def get_time_classes(request):
+     
+    if not request.is_ajax():
+        return HttpResponseBadRequest
+
+    school = Schools.objects.get(id__exact=request.POST.get('value', ''))
+    
+#    js_school = school.values_list('name')[0][0]
+    js_school = school.name
+    js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #Get respondants for school
+    users = Person.objects.filter(time__expire_time=None).filter(
+                                  json_data__json_string__contains='"school": "%s"' % js_school)
+    
+    total_users = float(len(users))
+    
+    if total_users == 0:
+        return HttpResponse(json.dumps([0,0,0,0,0]))
+    
+    t_7 = users.filter(json_data__json_string__contains='"exercise": "7h_or_more"')
+    t_6 = users.filter(json_data__json_string__contains='"exercise": "4_6_hours"')
+    t_3 = users.filter(json_data__json_string__contains='"exercise": "2_3_hours"')
+    t_1 = users.filter(json_data__json_string__contains='"exercise": "less_hour"')
+    t_none = users.filter(json_data__json_string__contains='"exercise": "none"')
+    
+    time_class_data = []
+    time_class_data.append((len(t_7)/total_users)*100)
+    time_class_data.append((len(t_6)/total_users)*100)
+    time_class_data.append((len(t_3)/total_users)*100)
+    time_class_data.append((len(t_1)/total_users)*100)
+    time_class_data.append((len(t_none)/total_users)*100)
+    
+    return HttpResponse(json.dumps(time_class_data))
+    
+
+def get_screen_times(request):
+     
+    if not request.is_ajax():
+        return HttpResponseBadRequest
+
+    school = Schools.objects.get(id__exact=request.POST.get('value', ''))
+    
+#    js_school = school.values_list('name')[0][0]
+    js_school = school.name
+    js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #Get respondants for school
+    users = Person.objects.filter(time__expire_time=None).filter(
+                                  json_data__json_string__contains='"school": "%s"' % js_school)
+    
+    total_users = len(users)
     

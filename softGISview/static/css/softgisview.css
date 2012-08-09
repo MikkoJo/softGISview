@@ -93,3 +93,35 @@
 select#school {
     width: 100%;
 }
+
+div#time_use_chart {
+    width: 340px;
+    height: 200px;
+}
+
+#screen_time_chart_1, #screen_time_chart_2, #screen_time_chart_3, #screen_time_chart_4 {
+    width: 160px;
+    height: 200px;
+}
+
+#screen_time_chart_1, #screen_time_chart_3 {
+    float: left;
+}
+
+#screen_time_chart_2, #screen_time_chart_4 {
+    float: right;
+}
+
+#charts {
+    margin-top: 50px;
+}
+
+table.jqplot-table-legend {
+    top: -55px !important;
+    right: auto !important;
+    left: -30px;
+}
+
+div.jqplot-pie-series.jqplot-data-label {
+    font-size: 0.9em;
+}

@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/jqplot/jquery.jqplot.min.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/softgisview.css" />
 {% endblock stylesheet %}
 
@@ -110,6 +111,14 @@ softgis_view base_map
     <script type="text/javascript" src="https://softgis.org.aalto.fi/OpenLayers212/OpenLayers.js"></script>
     <script type="text/javascript" src="{% url map_js map_slug_name='suomi' %}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/excanvas.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.json2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
     <script type="text/javascript" src="{% url subcontent page_name='js_settings' file_type='js' %}"></script>
     <script type="text/javascript">
