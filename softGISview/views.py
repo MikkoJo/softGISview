@@ -417,7 +417,7 @@ def get_time_classes(request):
     total_users = float(len(users))
     
     if total_users == 0:
-        return HttpResponse(json.dumps([0,0,0,0,0]))
+        return HttpResponse(json.dumps([[0,0,0,0,0]]))
     
     t_7 = users.filter(json_data__json_string__contains='"exercise": "7h_or_more"')
     t_6 = users.filter(json_data__json_string__contains='"exercise": "4_6_hours"')
@@ -432,7 +432,7 @@ def get_time_classes(request):
     time_class_data.append((len(t_1)/total_users)*100)
     time_class_data.append((len(t_none)/total_users)*100)
     
-    return HttpResponse(json.dumps(time_class_data))
+    return HttpResponse(json.dumps([time_class_data]))
     
 
 def get_screen_times(request):
