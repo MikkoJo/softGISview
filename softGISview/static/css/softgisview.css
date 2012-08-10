@@ -117,7 +117,7 @@ div#time_use_chart {
 }
 
 table.jqplot-table-legend {
-    top: -55px !important;
+    top: -75px !important;
     right: auto !important;
     left: -30px;
 }
