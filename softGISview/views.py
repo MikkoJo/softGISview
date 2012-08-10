@@ -52,21 +52,21 @@ def school_data(request):
     homes = Feature.objects.filter(expire_time=None).filter(
                                    id__in=list(home_ids)).filter(user_id__in=list(user_ids))
     
-    print len(homes)
+    #print len(homes)
     #Calculate the buffer valuesuser_ids = users.values_list('user_id', flat=True)
     m1000 = homes.filter(geometry__distance_lt=(school.coordinates, D(m=1000)))
     
-    print (len(m1000))
+    #print (len(m1000))
     
     m3000 = homes.filter(geometry__distance_lt=(school.coordinates, D(m=3000))).filter(
                          geometry__distance_gte=(school.coordinates, D(m=1000)))
-    print (len(m3000))
+    #print (len(m3000))
     
     m5000 = homes.filter(geometry__distance_lt=(school.coordinates, D(m=5000))).filter(
                          geometry__distance_gte=(school.coordinates, D(m=3000)))
-    print (len(m5000))
+    #print (len(m5000))
     m5001 = homes.filter(geometry__distance_gte=(school.coordinates, D(m=5000)))
-    print (len(m5001))
+    #print (len(m5001))
 #    print len(homes.filter(geometry__distance_gte=(school.coordinates, D(m=1000))))
     
     num_of_students = [len(m1000), len(m3000), len(m5000), len(m5001)]
@@ -234,10 +234,10 @@ def school_data(request):
 #    print(len(m5001_to))
 #    print(len(m5001_from))
     
-    print(t1000)
-    print(t3000)
-    print(t5000)
-    print(t5001)
+#    print(t1000)
+#    print(t3000)
+#    print(t5000)
+#    print(t5001)
     
     # Create features
     # First we create buffers
@@ -248,8 +248,16 @@ def school_data(request):
     #calculate distance to the farthest home point from school
     f_dist = 0
     for h in m5001:
-        if school.coordinates.distance(h.geometry) > f_dist:
-            f_dist = school.coordinates.distance(h.geometry)
+        temp_dist = Schools.objects.filter(
+                            id__exact=request.POST.get('value', '')).distance(
+                            h.geometry)[0].distance.m
+        if temp_dist > f_dist:
+            f_dist = temp_dist
+#        print ('f_dist:' )
+#        print (f_dist)
+#        print (Schools.objects.filter(
+#                            id__exact=request.POST.get('value', '')).distance(
+#                            h.geometry)[0].distance.m)
 
     
     b5001 = school.coordinates.buffer(f_dist)
@@ -449,5 +457,78 @@ def get_screen_times(request):
     users = Person.objects.filter(time__expire_time=None).filter(
                                   json_data__json_string__contains='"school": "%s"' % js_school)
     
-    total_users = len(users)
+    boys = users.filter(json_data__json_string__contains='"gender": "boy"')
+    girls = users.filter(json_data__json_string__contains='"gender": "girl"')
+
+    total_boys = float(len(boys))
+    total_girls = float(len(girls))
     
+    if len(boys) > 0:
+        tv_over2h_boys = boys.filter(
+                         Q(json_data__json_string__contains='"tv_computer": "more_5_hours"') | 
+                         Q(json_data__json_string__contains='"tv_computer": "2_4_hours"'))
+
+        tv_under2h_boys = boys.filter(
+                         Q(json_data__json_string__contains='"tv_computer": "1_2_hours"') | 
+                         Q(json_data__json_string__contains='"tv_computer": "less_1_hours"') |
+                         Q(json_data__json_string__contains='"tv_computer": "none"'))
+
+        social_over2h_boys = boys.filter(
+                         Q(json_data__json_string__contains='"sos_network": "more_5_hours"') | 
+                         Q(json_data__json_string__contains='"sos_network": "2_4_hours"'))
+
+        social_under2h_boys = boys.filter(
+                         Q(json_data__json_string__contains='"sos_network": "1_2_hours"') | 
+                         Q(json_data__json_string__contains='"sos_network": "less_1_hours"') |
+                         Q(json_data__json_string__contains='"sos_network": "none"'))
+        
+        tv_o2h_b = (tv_over2h_boys/total_boys)*100
+        tv_u2h_b = (tv_under2h_boys/total_boys)*100
+        sos_o2h_b = (social_over2h_boys/total_boys)*100
+        sos_u2h_b = (social_under2h_boys/total_boys)*100
+        
+        tv_b = [['Yli 2h', tv_o2h_b],['Alle 2h', tv_u2h_b]]
+        sos_b = [['Yli 2h', sos_o2h_b],['Alle 2h', sos_u2h_b]]
+
+    else:
+        tv_b = [['Yli 2h', 0],['Alle 2h', 0]]
+        sos_b = [['Yli 2h', 0],['Alle 2h', 0]]
+        
+    if len(girls) > 0:
+        tv_over2h_girls = girls.filter(
+                         Q(json_data__json_string__contains='"tv_computer": "more_5_hours"') | 
+                         Q(json_data__json_string__contains='"tv_computer": "2_4_hours"'))
+
+
+        tv_under2h_girls = girls.filter(
+                         Q(json_data__json_string__contains='"tv_computer": "1_2_hours"') | 
+                         Q(json_data__json_string__contains='"tv_computer": "less_1_hours"') |
+                         Q(json_data__json_string__contains='"tv_computer": "none"'))
+
+        social_over2h_girls = girls.filter(
+                         Q(json_data__json_string__contains='"sos_network": "more_5_hours"') | 
+                         Q(json_data__json_string__contains='"sos_network": "2_4_hours"'))
+
+        social_under2h_girls = girls.filter(
+                         Q(json_data__json_string__contains='"sos_network": "1_2_hours"') | 
+                         Q(json_data__json_string__contains='"sos_network": "less_1_hours"') |
+                         Q(json_data__json_string__contains='"sos_network": "none"'))
+    
+        tv_o2h_g = (tv_over2h_girls/total_girls)*100
+        tv_u2h_g = (tv_under2h_girls/total_girls)*100
+        sos_o2h_g = (social_over2h_girls/total_girls)*100
+        sos_u2h_g = (social_under2h_girls/total_girls)*100
+
+        tv_g = [['Yli 2h', tv_o2h_g],['Alle 2h', tv_u2h_g]]
+        sos_g = [['Yli 2h', sos_o2h_g],['Alle 2h', sos_u2h_g]]
+
+    else:
+        tv_g = [['Yli 2h', 0],['Alle 2h', 0]]
+        sos_g = [['Yli 2h', 0],['Alle 2h', 0]]
+    
+    return_json = {'tv_b': tv_b,
+                   'sos_b': sos_b,
+                   'tv_g': tv_g,
+                   'sos_g': sos_g}
+
+    return HttpResponse(json.dumps(return_json))    
