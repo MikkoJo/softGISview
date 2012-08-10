@@ -337,11 +337,8 @@ function time_classes_callback(response) {
         );
     
 }
+function screen_time_data_callback(response) {
 
-function screen_time_callback(response) {
-//    travel_buffersLayer.setVisibility(false);
-//    travel_time_buffersLayer.setVisibility(false);
-    $("#content").html(response);
     var s1 = [['Yli 2h',40],['Alle 2h',60]];
     var s2 = [['Yli 2h',23],['Alle 2h',77]];
     var s3 = [['Yli 2h',10],['Alle 2h',90]];
@@ -355,7 +352,7 @@ function screen_time_callback(response) {
 //    var s2 = [[23],[77]];
 //    var ticks = ['yli 7h', '4-6h', '2-3h', 'alle 1h', 'ei lainkaan'];
 //    var ticks = ['a', 'b', 'c', 'd', 'e'];
-    var plot1 = $.jqplot('screen_time_chart_1', [s1], {
+    var plot1 = $.jqplot('screen_time_chart_1', [response.tv_g], {
         title: {text: "tv, dvd ja pelaaminen, tytöt",
                 fontSize: '0.9em'
         },
@@ -363,7 +360,7 @@ function screen_time_callback(response) {
         // be applied to all series in the chart.
         seriesDefaults: serDefaults
         });
-    var plot2 = $.jqplot('screen_time_chart_2', [s2], {
+    var plot2 = $.jqplot('screen_time_chart_2', [response.tv_b], {
         title: {text: "tv, dvd ja pelaaminen, pojat",
                 fontSize: '0.9em'
         },
@@ -372,7 +369,7 @@ function screen_time_callback(response) {
         seriesDefaults: serDefaults,
         legend: { show:true, location: 'nw', placement: 'outside' }
         });
-    var plot3 = $.jqplot('screen_time_chart_3', [s3], {
+    var plot3 = $.jqplot('screen_time_chart_3', [response.sos_g], {
         title: {text: "sosiaalinen media, tytöt",
                 fontSize: '0.9em'
         },
@@ -380,7 +377,7 @@ function screen_time_callback(response) {
         // be applied to all series in the chart.
         seriesDefaults: serDefaults
         });
-    var plot4 = $.jqplot('screen_time_chart_4', [s4], {
+    var plot4 = $.jqplot('screen_time_chart_4', [response.sos_b], {
         title: {text: "sosiaalinen media, pojat",
                 fontSize: '0.9em'
         },
@@ -388,6 +385,31 @@ function screen_time_callback(response) {
         // be applied to all series in the chart.
         seriesDefaults: serDefaults
         });
+
+}
+
+function screen_time_callback(response) {
+//    travel_buffersLayer.setVisibility(false);
+//    travel_time_buffersLayer.setVisibility(false);
+    $("#content").html(response);
+    $.ajax({
+        url: softgisview.settings.page_url + 'screen_time',
+        //url: "/softgisview/school_data",
+        type: "POST",
+        data: 'value=' + $("#school")[0].value,
+//        contentType: "application/json",
+        success: function(data) {
+            screen_time_data_callback(data);
+        },
+        error: function(e) {
+            screen_time_data_callback(data);
+        },
+        dataType: "json",
+        beforeSend: function(xhr) {
+            xhr.withCredentials = true;
+        }
+    });
+
     $(".navigationButton").click(function () {
             console.log(this.value);
             change_page(this.value, this.value + "_callback");

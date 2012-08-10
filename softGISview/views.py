@@ -482,17 +482,19 @@ def get_screen_times(request):
                          Q(json_data__json_string__contains='"sos_network": "less_1_hours"') |
                          Q(json_data__json_string__contains='"sos_network": "none"'))
         
-        tv_o2h_b = (tv_over2h_boys/total_boys)*100
-        tv_u2h_b = (tv_under2h_boys/total_boys)*100
-        sos_o2h_b = (social_over2h_boys/total_boys)*100
-        sos_u2h_b = (social_under2h_boys/total_boys)*100
+        tv_o2h_b = (len(tv_over2h_boys)/total_boys)*100
+        tv_u2h_b = (len(tv_under2h_boys)/total_boys)*100
+        sos_o2h_b = (len(social_over2h_boys)/total_boys)*100
+        sos_u2h_b = (len(social_under2h_boys)/total_boys)*100
+        tv_eos_b = 100 - (tv_o2h_b + tv_u2h_b)
+        sos_eos_b = 100 - (sos_o2h_b + sos_u2h_b)
         
-        tv_b = [['Yli 2h', tv_o2h_b],['Alle 2h', tv_u2h_b]]
-        sos_b = [['Yli 2h', sos_o2h_b],['Alle 2h', sos_u2h_b]]
+        tv_b = [['Yli 2h', tv_o2h_b],['Alle 2h', tv_u2h_b],['eos', tv_eos_b]]
+        sos_b = [['Yli 2h', sos_o2h_b],['Alle 2h', sos_u2h_b],['eos', sos_eos_b]]
 
     else:
-        tv_b = [['Yli 2h', 0],['Alle 2h', 0]]
-        sos_b = [['Yli 2h', 0],['Alle 2h', 0]]
+        tv_b = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
+        sos_b = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
         
     if len(girls) > 0:
         tv_over2h_girls = girls.filter(
@@ -514,17 +516,19 @@ def get_screen_times(request):
                          Q(json_data__json_string__contains='"sos_network": "less_1_hours"') |
                          Q(json_data__json_string__contains='"sos_network": "none"'))
     
-        tv_o2h_g = (tv_over2h_girls/total_girls)*100
-        tv_u2h_g = (tv_under2h_girls/total_girls)*100
-        sos_o2h_g = (social_over2h_girls/total_girls)*100
-        sos_u2h_g = (social_under2h_girls/total_girls)*100
+        tv_o2h_g = (len(tv_over2h_girls)/total_girls)*100
+        tv_u2h_g = (len(tv_under2h_girls)/total_girls)*100
+        sos_o2h_g = (len(social_over2h_girls)/total_girls)*100
+        sos_u2h_g = (len(social_under2h_girls)/total_girls)*100
+        tv_eos_g = 100 - (tv_o2h_g + tv_u2h_g)
+        sos_eos_g = 100 - (sos_o2h_g + sos_u2h_g)
 
-        tv_g = [['Yli 2h', tv_o2h_g],['Alle 2h', tv_u2h_g]]
-        sos_g = [['Yli 2h', sos_o2h_g],['Alle 2h', sos_u2h_g]]
+        tv_g = [['Yli 2h', tv_o2h_g],['Alle 2h', tv_u2h_g],['eos', tv_eos_g]]
+        sos_g = [['Yli 2h', sos_o2h_g],['Alle 2h', sos_u2h_g],['eos', sos_eos_g]]
 
     else:
-        tv_g = [['Yli 2h', 0],['Alle 2h', 0]]
-        sos_g = [['Yli 2h', 0],['Alle 2h', 0]]
+        tv_g = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
+        sos_g = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
     
     return_json = {'tv_b': tv_b,
                    'sos_b': sos_b,
