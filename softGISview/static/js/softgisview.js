@@ -187,7 +187,18 @@ function toggleShow() {
 function update_legend() {
     var layerName = $(".color_select :radio").serializeArray()[0].value;
     var layer = map.getLayersByName(layerName)[0];
-    $("#legendTable tr").each(function(index) {
+    var r = layer.styleMap.styles["default"].rules;
+    var table = $("#legendTable");
+    table.html('');
+    for (var i = 0; i < r.length; i++) {
+       var tr = $(document.createElement("tr")); 
+       tr.append($('<td></td>', {'class': 'legend_color'}));
+       tr.append($('<td></td>', {'class': 'legend_label'}));
+       tr.children(".legend_color").css("background-color", r[i].symbolizer.fillColor);
+       tr.children(".legend_label").html(r[i].name);
+       tr.appendTo(table);
+    }
+/*    $("#legendTable tr").each(function(index) {
         var r = layer.styleMap.styles["default"].rules;
         console.log(r[index].name);
         //console.log(r[index].id);
@@ -196,6 +207,7 @@ function update_legend() {
         $(this).children(".legend_label").html(r[index].name);
 
     });
+*/
     if($("#legendContainer").css("visibility") === "hidden") {
         $("#legendContainer").css("visibility", "visible");
     }
@@ -211,8 +223,12 @@ function change_layer() {
     update_legend();
 }
 
-function submitSchool_callback(response) {
+function submitSchool_callback(response, textStatus) {
+    console.log(textStatus);
     console.log(response);
+    if (textStatus === 'error') {
+        return;
+    }
     var geojson_format = new OpenLayers.Format.GeoJSON();
     travel_buffersLayer.addFeatures(geojson_format.read(response));
     travel_time_buffersLayer.addFeatures(geojson_format.read(response));
@@ -233,14 +249,14 @@ function submitSchool(schoolID, callback_function) {
         type: "POST",
         data: 'value=' + schoolID,
 //        contentType: "application/json",
-        success: function(data) {
+        success: function(data, textStatus) {
             if(callback_function !== undefined) {
-                callback_function(data);
+                callback_function(data, textStatus);
             }
         },
-        error: function(e) {
+        error: function(e, textStatus) {
             if(callback_function !== undefined) {
-                callback_function(e);
+                callback_function(e, textStatus);
             }
         },
         dataType: "json",
@@ -486,7 +502,7 @@ var travel_buffersLayer,
     selectControl;
 function init_teacher() {
     $.jqplot.config.enablePlugins = true;
-    map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 2);
+    map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 3);
     travel_buffersLayer = new OpenLayers.Layer.Vector("Travel Buffers Layer", {
                             styleMap: new OpenLayers.StyleMap(travel_style)
                     });
@@ -532,7 +548,7 @@ var context = {
 }
 var defStyle = {
     strokeWidth: 1,
-    pointRadius: 5,
+    pointRadius: 8,
     pointerEvents: "visiblePainted",
     strokeOpacity: 1,
     fillOpacity: 0.7
@@ -903,77 +919,38 @@ var travel_style = new OpenLayers.Style(
         {
             rules: [
                 new OpenLayers.Rule({
-                    name: "Alle 10%",
+                    name: "0 - 20%",
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.LESS_THAN,
+                        type: OpenLayers.Filter.Comparison.LESS_THAN_OR_EQUAL_TO,
                         property: "travel", // the "foo" feature attribute
-                        value: 10
+                        value: 20
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
-                        fillColor:  "#FFF7EC",
+                        fillColor:  "#FFFFB2",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "10 - 20%",
+                    name: "21 - 40%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
-                        lowerBoundary: 10,
-                        upperBoundary: 20
-                    }),
-                    symbolizer: {
-                        fillColor:  "#FFFFCC",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "20 - 30%",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "travel",
-                        lowerBoundary: 20,
-                        upperBoundary: 30
-                    }),
-                    symbolizer: {
-                        fillColor:  "#FFEDA0",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "30 - 40%",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "travel",
-                        lowerBoundary: 30,
+                        lowerBoundary: 20.00000000001,
                         upperBoundary: 40
                     }),
                     symbolizer: {
-                        fillColor:  "#FED976",
+                        fillColor:  "#FECC5C",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "40 - 50%",
+                    name: "41 - 60%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
-                        lowerBoundary: 40,
-                        upperBoundary: 50
-                    }),
-                    symbolizer: {
-                        fillColor:  "#FEB24C",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "50 - 60%",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "travel",
-                        lowerBoundary: 50,
+                        lowerBoundary: 40.00000000001,
                         upperBoundary: 60
                     }),
                     symbolizer: {
@@ -982,55 +959,28 @@ var travel_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "60 - 70%",
+                    name: "61 - 80%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
-                        lowerBoundary: 60,
-                        upperBoundary: 70
-                    }),
-                    symbolizer: {
-                        fillColor:  "#FC4E2A",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "70 - 80%",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "travel",
-                        lowerBoundary: 70,
+                        lowerBoundary: 60.00000000001,
                         upperBoundary: 80
                     }),
                     symbolizer: {
-                        fillColor:  "#E31A1C",
+                        fillColor:  "#F03B20",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "80 - 90%",
+                    name: "81 - 100%",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "travel",
-                        lowerBoundary: 80,
-                        upperBoundary: 90
+                        lowerBoundary: 80.000000000001,
+                        upperBoundary: 100
                     }),
                     symbolizer: {
                         fillColor:  "#BD0026",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "Yli 90%",
-                    // a rule contains an optional filter
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.GREATER_THAN,
-                        property: "travel", // the "foo" feature attribute
-                        value: 90
-                    }),
-                    // if a feature matches the above filter, use this symbolizer
-                    symbolizer: {
-                        fillColor:  "#800026",
                         strokeColor: "#CCEBC5"
                     }
                 }),
@@ -1059,52 +1009,26 @@ var travel_time_style = new OpenLayers.Style(
         {
             rules: [
                 new OpenLayers.Rule({
-                    name: "Alle 5 minuuttia",
+                    name: "noin 5 minuuttia",
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.LESS_THAN,
                         property: "time", // the "foo" feature attribute
-                        value: 5
+                        value: 6
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
-                        fillColor:  "#FFF7EC",
+                        fillColor:  "#FFFFB2",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "5 - 10 minuuttia",
+                    name: "noin 10 minuuttia",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
-                        lowerBoundary: 5,
-                        upperBoundary: 10
-                    }),
-                    symbolizer: {
-                        fillColor:  "#FFFFCC",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "10 - 15 minuuttia",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "time",
-                        lowerBoundary: 10,
+                        lowerBoundary: 6,
                         upperBoundary: 15
-                    }),
-                    symbolizer: {
-                        fillColor:  "#FFEDA0",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "15 - 20 minuuttia",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "time",
-                        lowerBoundary: 15,
-                        upperBoundary: 20
                     }),
                     symbolizer: {
                         fillColor:  "#FED976",
@@ -1112,11 +1036,11 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "20 - 25 minuuttia",
+                    name: "noin 20 minuuttia",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
-                        lowerBoundary: 20,
+                        lowerBoundary: 15.00000000001,
                         upperBoundary: 25
                     }),
                     symbolizer: {
@@ -1125,12 +1049,12 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "25 - 30 minuuttia",
+                    name: "noin puoli tuntia",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
-                        lowerBoundary: 25,
-                        upperBoundary: 30
+                        lowerBoundary: 25.0000000000001,
+                        upperBoundary: 35
                     }),
                     symbolizer: {
                         fillColor:  "#FD8D3C",
@@ -1138,55 +1062,29 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "30 - 35 minuuttia",
+                    name: "noin 45 minuuttia",
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
-                        lowerBoundary: 30,
-                        upperBoundary: 35
+                        lowerBoundary: 35.0000000000001,
+                        upperBoundary: 50
                     }),
                     symbolizer: {
-                        fillColor:  "#FC4E2A",
+                        fillColor:  "#F03B20",
                         strokeColor: "#CCEBC5"
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "35 - 40 minuuttia",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "time",
-                        lowerBoundary: 35,
-                        upperBoundary: 40
-                    }),
-                    symbolizer: {
-                        fillColor:  "#E31A1C",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "40 - 45 minuuttia",
-                    filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.BETWEEN,
-                        property: "time",
-                        lowerBoundary: 40,
-                        upperBoundary: 45
-                    }),
-                    symbolizer: {
-                        fillColor:  "#BD0026",
-                        strokeColor: "#CCEBC5"
-                    }
-                }),
-                new OpenLayers.Rule({
-                    name: "Yli 45 minuuttia",
+                    name: "noin tunti",
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.GREATER_THAN,
                         property: "time", // the "foo" feature attribute
-                        value: 45
+                        value: 50
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
-                        fillColor:  "#800026",
+                        fillColor:  "#BD0026",
                         strokeColor: "#CCEBC5"
                     }
                 }),

@@ -33,8 +33,11 @@ def get_school_list(request):
 def school_data(request):
     
     if not request.is_ajax():
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest()
 
+    if request.POST.get('value', '') == '':
+        return HttpResponseBadRequest()
+        
     school = Schools.objects.get(id__exact=request.POST.get('value', ''))
     
 #    js_school = school.values_list('name')[0][0]
@@ -46,13 +49,17 @@ def school_data(request):
     
     user_ids = users.values_list('user_id', flat=True)
     
+    #print (len(user_ids))
+    
     home_ids = Property.objects.filter(expire_time=None).filter(
                                        json_string__contains='home').values_list('feature', flat=True)
     
+    #print (len(home_ids))
     homes = Feature.objects.filter(expire_time=None).filter(
                                    id__in=list(home_ids)).filter(user_id__in=list(user_ids))
     
     #print len(homes)
+
     #Calculate the buffer valuesuser_ids = users.values_list('user_id', flat=True)
     m1000 = homes.filter(geometry__distance_lt=(school.coordinates, D(m=1000)))
     
@@ -93,10 +100,17 @@ def school_data(request):
         m1000_to = m1000_users.filter(
                                  Q(json_data__json_string__contains='"how_to_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_to_school": "bike"'))
-        m1000_from = m1000_users.filter(
+        m1000_temp = m1000_users.exclude(user_id__in=m1000_to.values_list('user_id', flat=True))
+        m1000_from = m1000_temp.filter(
                                  Q(json_data__json_string__contains='"how_from_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_from_school": "bike"'))
+#        m1000_from = m1000_users.filter(
+#                                 Q(json_data__json_string__contains='"how_from_school": "walk"') | 
+#                                 Q(json_data__json_string__contains='"how_from_school": "bike"'))
 
+        # for a in m1000_users:            # b = a.json_data.get('school_journey')            # if b != None:                # try:                    # print a.json_data.get('username')                    # print b['how_to_school']                    # print b['how_from_school']                # except:                    # pass
+
+        # print(len(m1000_users))        # print(len(m1000_to))        # print(len(m1000_temp))        # print(len(m1000_from))
         m1000_to = float(len(m1000_to))/len(m1000)
         m1000_from = float(len(m1000_from))/len(m1000)
         
@@ -127,7 +141,8 @@ def school_data(request):
         m3000_to = m3000_users.filter(
                                  Q(json_data__json_string__contains='"how_to_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_to_school": "bike"'))
-        m3000_from = m3000_users.filter(
+        m3000_temp = m3000_users.exclude(user_id__in=m3000_to.values_list('user_id', flat=True))
+        m3000_from = m3000_temp.filter(
                                  Q(json_data__json_string__contains='"how_from_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_from_school": "bike"'))
 
@@ -161,7 +176,8 @@ def school_data(request):
         m5000_to = m5000_users.filter(
                                  Q(json_data__json_string__contains='"how_to_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_to_school": "bike"'))
-        m5000_from = m5000_users.filter(
+        m5000_temp = m5000_users.exclude(user_id__in=m5000_to.values_list('user_id', flat=True))
+        m5000_from = m5000_temp.filter(
                                  Q(json_data__json_string__contains='"how_from_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_from_school": "bike"'))
 
@@ -195,7 +211,8 @@ def school_data(request):
         m5001_to = m5001_users.filter(
                                  Q(json_data__json_string__contains='"how_to_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_to_school": "bike"'))
-        m5001_from = m5001_users.filter(
+        m5001_temp = m5001_users.exclude(user_id__in=m5001_to.values_list('user_id', flat=True))
+        m5001_from = m5001_temp.filter(
                                  Q(json_data__json_string__contains='"how_from_school": "walk"') | 
                                  Q(json_data__json_string__contains='"how_from_school": "bike"'))
 
@@ -283,7 +300,7 @@ def school_data(request):
                                     "homes": len(m1000),
                                     "to": m1000_to * 100,
                                     "from": m1000_from * 100,
-                                    "travel": ((m1000_to + m1000_from) / 2) * 100,
+                                    "travel": ((m1000_to + m1000_from)) * 100,
                                     "time": t1000,
                                     "name": "1000"
                                     }
@@ -294,7 +311,7 @@ def school_data(request):
                                     "homes": len(m3000),
                                     "to": m3000_to * 100,
                                     "from": m3000_from * 100,
-                                    "travel": ((m3000_to + m3000_from) / 2) * 100,
+                                    "travel": ((m3000_to + m3000_from)) * 100,
                                     "time": t3000,
                                     "name": "3000"
                                     }
@@ -305,7 +322,7 @@ def school_data(request):
                                     "homes": len(m5000),
                                     "to": m5000_to * 100,
                                     "from": m5000_from * 100,
-                                    "travel": ((m5000_to + m5000_from) / 2) * 100,
+                                    "travel": ((m5000_to + m5000_from)) * 100,
                                     "time": t5000,
                                     "name": "5000"
                                     }
@@ -316,7 +333,7 @@ def school_data(request):
                                     "homes": len(m5001),
                                     "to": m5001_to * 100,
                                     "from": m5001_from * 100,
-                                    "travel": ((m5001_to + m5001_from) / 2) * 100,
+                                    "travel": ((m5001_to + m5001_from)) * 100,
                                     "time": t5001,
                                     "name": "5001"
                                     }
