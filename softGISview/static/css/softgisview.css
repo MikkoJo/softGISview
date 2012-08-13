@@ -125,3 +125,15 @@ table.jqplot-table-legend {
 div.jqplot-pie-series.jqplot-data-label {
     font-size: 0.9em;
 }
+
+.symbol_square {
+    color: #F99F23;
+}
+
+.symbol_triangle {
+    color: #6CCFF5;
+}
+
+.symbol_circle {
+    color: #8B2A90;
+}
