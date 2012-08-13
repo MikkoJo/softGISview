@@ -379,6 +379,9 @@ def get_free_time_features(request):
     if not request.is_ajax():
         return HttpResponseBadRequest
 
+    if request.POST.get('value', '') == '':
+        return HttpResponseBadRequest()
+
     school = Schools.objects.get(id__exact=request.POST.get('value', ''))
     
 #    js_school = school.values_list('name')[0][0]
@@ -430,6 +433,9 @@ def get_time_classes(request):
     if not request.is_ajax():
         return HttpResponseBadRequest
 
+    if request.POST.get('value', '') == '':
+        return HttpResponseBadRequest()
+
     school = Schools.objects.get(id__exact=request.POST.get('value', ''))
     
 #    js_school = school.values_list('name')[0][0]
@@ -464,6 +470,9 @@ def get_screen_times(request):
      
     if not request.is_ajax():
         return HttpResponseBadRequest
+
+    if request.POST.get('value', '') == '':
+        return HttpResponseBadRequest()
 
     school = Schools.objects.get(id__exact=request.POST.get('value', ''))
     

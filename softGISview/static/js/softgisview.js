@@ -55,6 +55,9 @@ function get_features_callback(response_data) {
     gjf = new OpenLayers.Format.GeoJSON();
     features = gjf.read(response_data);
 
+    if (features === null) {
+        return;
+    }
     // create arrays for different valueNames from the features array
     for(i = 0; i < features.length; i++) {
         if (featArrays[features[i].attributes.valuename] === undefined) {
@@ -300,6 +303,7 @@ var ajaxDataRenderer = function(url, plot, options) {
 //            if(callback_function !== undefined && typeof window[callback_function] === 'function') {
 //                window[callback_function](e);
 //            }
+            ret = [[0]];
         },
         dataType: "json",
         beforeSend: function(xhr) {
@@ -353,12 +357,15 @@ function time_classes_callback(response) {
         );
     
 }
-function screen_time_data_callback(response) {
+function screen_time_data_callback(response, textStatus) {
 
-    var s1 = [['Yli 2h',40],['Alle 2h',60]];
-    var s2 = [['Yli 2h',23],['Alle 2h',77]];
-    var s3 = [['Yli 2h',10],['Alle 2h',90]];
-    var s4 = [['Yli 2h',49],['Alle 2h',51]];
+//    var s1 = [['Yli 2h',40],['Alle 2h',60]];
+//    var s2 = [['Yli 2h',23],['Alle 2h',77]];
+//    var s3 = [['Yli 2h',10],['Alle 2h',90]];
+//    var s4 = [['Yli 2h',49],['Alle 2h',51]];
+    if (textStatus === 'error') {
+        return;
+    }
     var serDefaults = {
             renderer:$.jqplot.PieRenderer,
             rendererOptions: {
@@ -414,11 +421,11 @@ function screen_time_callback(response) {
         type: "POST",
         data: 'value=' + $("#school")[0].value,
 //        contentType: "application/json",
-        success: function(data) {
-            screen_time_data_callback(data);
+        success: function(data, textStatus) {
+            screen_time_data_callback(data, textStatus);
         },
-        error: function(e) {
-            screen_time_data_callback(data);
+        error: function(e, textStatus) {
+            screen_time_data_callback(e, textStatus);
         },
         dataType: "json",
         beforeSend: function(xhr) {
