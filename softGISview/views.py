@@ -25,7 +25,7 @@ def travel(request):
 def get_school_list(request):
     school_list = Schools.objects.all()
     
-    return render_to_response('school_list.html',
+    return render_to_response('index.html',
                       {"schools": school_list}, 
                       context_instance=RequestContext(request))    
 

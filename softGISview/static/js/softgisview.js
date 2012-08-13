@@ -49,7 +49,7 @@ function get_features_callback(response_data) {
  //   var response = response_data;
     //TESTING
  //   pointLayer.events.register("featureadded", undefined, add_popup_to_feature);
-    console.log("get_features_callback: " + JSON.stringify(response_data));
+    //console.log("get_features_callback: " + JSON.stringify(response_data));
     var gjf, features, featArrays = {};
 
     gjf = new OpenLayers.Format.GeoJSON();
@@ -227,8 +227,8 @@ function change_layer() {
 }
 
 function submitSchool_callback(response, textStatus) {
-    console.log(textStatus);
-    console.log(response);
+    //console.log(textStatus);
+    //console.log(response);
     if (textStatus === 'error') {
         return;
     }
@@ -411,6 +411,20 @@ function screen_time_data_callback(response, textStatus) {
 
 }
 
+function school_journey_activity_callback(response) {
+
+    $("#content").html(response);
+    $(".color_select :radio").click(change_layer);
+    
+    if($(".color_select").css("visibility") === "hidden") {
+        $(".color_select").css("visibility", "visible");
+    }
+    $(".navigationButton").click(function () {
+            console.log(this.value);
+            change_page(this.value, this.value + "_callback");
+        }
+        );
+}
 function screen_time_callback(response) {
 //    travel_buffersLayer.setVisibility(false);
 //    travel_time_buffersLayer.setVisibility(false);
@@ -525,10 +539,12 @@ function init_teacher() {
     });
     map.addControl(selectControl);
     selectControl.activate();
-    $(".color_select :radio").click(change_layer);
-    $('#school').change(function (evt) {submitSchool(evt.target.value, submitSchool_callback);});
+//    $(".color_select :radio").click(change_layer);
+//    $('#school').change(function (evt) {submitSchool(evt.target.value, submitSchool_callback);});
     $(".navigationButton").click(function () {
             console.log(this.value);
+            submitSchool($("#school").val(), submitSchool_callback);
+            //$("#school").val()
             change_page(this.value, this.value + "_callback");
         }
         );

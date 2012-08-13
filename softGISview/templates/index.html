@@ -39,71 +39,9 @@ softgis_view base_map
             {% endfor %}
         </select>
     </form>
-    <table class="color_select" style="visibility: hidden;">
-        <tr class="">
-            <td>
-                {% trans 'Visualize by amount of students walking or biking their school journeys' %}
-            </td>
-            <td>
-                <input type="radio" name="visual_type" value="Travel Buffers Layer" checked="checked"/>
-            </td>
-        </tr>
-        <tr class="">
-            <td>
-                {% trans 'Visualize on average active time spent on school journeys' %}
-            </td>
-            <td>
-                <input type="radio" name="visual_type" value="Travel Time Buffers Layer"/>
-            </td>
-        </tr>
-    </table>
-    <div id="legendContainer" style="visibility: hidden;">
-        <h3>{% trans 'Legend' %}</h3>
-        <table id="legendTable" class="legend">
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-            <tr>
-                <td class="legend_color">&nbsp;</td>
-                <td class="legend_label"></td>
-            </tr>
-        </table>
     </div>
     <div>
-        {% include 'next_button.html' with next="free_time" %}
+        {% include 'next_button.html' with next="school_journey_activity" %}
     </div>
 {% endblock %}
 
@@ -121,9 +59,12 @@ softgis_view base_map
     <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.json2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
     <script type="text/javascript" src="{% url subcontent page_name='js_settings' file_type='js' %}"></script>
+{% comment %}
     <script type="text/javascript">
         var feat_data = {% include 'clean_feat_data.json' %};
     </script>
+{% endcomment %}
+    <script type="text/javascript" src="{% url api_javascript %}?lib=jquery"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             create_map('map', init_teacher); 
