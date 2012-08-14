@@ -2,8 +2,11 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.http import HttpResponseBadRequest
+from django.http import HttpResponseForbidden
 from django.contrib.gis.measure import D
 from django.db.models import Q
+from django.contrib.auth.decorators import permission_required
+from django.core.urlresolvers import reverse_lazy
 
 from softGISview.models import Schools
 from geojson_rest.models import Feature
@@ -24,12 +27,13 @@ def travel(request):
 
 def get_school_list(request):
     school_list = Schools.objects.all()
-    
-    return render_to_response('index.html',
+    #assert False
+    return render_to_response('start.html',
                       {"schools": school_list}, 
                       context_instance=RequestContext(request))    
 
 # This is not a good way to retrieve the data. Should use API methods, but those are not planned/available
+@permission_required('softGISview.view_data', raise_exception=True)
 def school_data(request):
     
     if not request.is_ajax():
@@ -347,6 +351,7 @@ def school_data(request):
                              
     return HttpResponse(json.dumps(featurecollection))  
     
+#@permission_required('schools.view_data')
 def subcontent(request, page_name, file_type):
     """
     if request.is_ajax():
@@ -367,17 +372,22 @@ def subcontent(request, page_name, file_type):
     else:
         return HttpResponseBadRequest
     """
-    school_id = request.POST.get('value', '')
-    return render_to_response(page_name + "." + file_type,
+    
+    #print (request.user)
+    if request.user.has_perm('softGISview.view_data') or page_name == 'js_settings':
+        school_id = request.POST.get('value', '')
+        return render_to_response(page_name + "." + file_type,
                {"school_id": school_id},        
                context_instance=RequestContext(request))
-
+    else:
+        return HttpResponseForbidden()
     #return HttpResponse('You requested: %s' % page_name)
 
+@permission_required('softGISview.view_data', raise_exception=True)
 def get_free_time_features(request):
 
     if not request.is_ajax():
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest()
 
     if request.POST.get('value', '') == '':
         return HttpResponseBadRequest()
@@ -428,10 +438,11 @@ def get_free_time_features(request):
 
     return HttpResponse(json.dumps(featurecollection))
 
+@permission_required('softGISview.view_data', raise_exception=True)
 def get_time_classes(request):
      
     if not request.is_ajax():
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest()
 
     if request.POST.get('value', '') == '':
         return HttpResponseBadRequest()
@@ -466,10 +477,11 @@ def get_time_classes(request):
     return HttpResponse(json.dumps([time_class_data]))
     
 
+@permission_required('softGISview.view_data', raise_exception=True)
 def get_screen_times(request):
      
     if not request.is_ajax():
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest()
 
     if request.POST.get('value', '') == '':
         return HttpResponseBadRequest()
@@ -561,4 +573,4 @@ def get_screen_times(request):
                    'tv_g': tv_g,
                    'sos_g': sos_g}
 
-    return HttpResponse(json.dumps(return_json))    
+    return HttpResponse(json.dumps(return_json))

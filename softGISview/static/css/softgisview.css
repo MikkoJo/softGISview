@@ -156,3 +156,10 @@ div.jqplot-pie-series.jqplot-data-label {
     opacity: 0.7;
     filter: Alpha(opacity=70);
 }
+
+
+.error {
+    visibility: visible !important;
+    color: red;
+    font-weight: bolder;
+}

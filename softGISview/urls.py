@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 urlpatterns = patterns('softGISview.views',
     url(r'^$', 
-        'main',
+        'get_school_list',
         name='front_page'),
     url(r'^travel$', 
         'travel',

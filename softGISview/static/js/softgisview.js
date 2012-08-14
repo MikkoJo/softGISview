@@ -518,6 +518,20 @@ function init() {
     
 }
 
+function check_login_callback(response, textStatus, last) {
+    
+    if(textStatus === 'error') {
+        if(response.status === 401) {
+            $('#error').toggleClass('hidden', false);
+            return;
+        }
+    }
+    submitSchool($("#school").val(), submitSchool_callback);
+    //$("#school").val()
+    var next = $(".navigationButton").val();
+    change_page(next, next + "_callback");
+
+}
 var travel_buffersLayer,
     travel__time_buffersLayer,
     selectControl;
@@ -541,11 +555,33 @@ function init_teacher() {
     selectControl.activate();
 //    $(".color_select :radio").click(change_layer);
 //    $('#school').change(function (evt) {submitSchool(evt.target.value, submitSchool_callback);});
-    $(".navigationButton").click(function () {
-            console.log(this.value);
-            submitSchool($("#school").val(), submitSchool_callback);
+    $("#schoolSelect_form").submit(function () {
+//            console.log(this.value);
+            if($("#school").val() === '') {
+                $("#school_error").toggleClass('hidden', false);
+            }
+            else {
+                $("#school_error").toggleClass('hidden', true);
+                gnt.auth.login('school_' + $("#school").val(), $("#pw").val(), check_login_callback);
+                return false;
+            }
+//            submitSchool($("#school").val(), submitSchool_callback);
             //$("#school").val()
-            change_page(this.value, this.value + "_callback");
+//            change_page(this.value, this.value + "_callback");
+        }
+        );
+    $(".navigationButton").click(function () {
+//            console.log(this.value);
+            if($("#school").val() === '') {
+                $("#school_error").toggleClass('hidden', false);
+            }
+            else {
+                $("#school_error").toggleClass('hidden', true);
+                gnt.auth.login('school_' + $("#school").val(), $("#pw").val(), check_login_callback);
+            }
+//            submitSchool($("#school").val(), submitSchool_callback);
+            //$("#school").val()
+//            change_page(this.value, this.value + "_callback");
         }
         );
 }

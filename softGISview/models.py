@@ -12,3 +12,8 @@ class Schools(models.Model):
     
     def __unicode__(self):
         return self.name
+    
+    class Meta:
+        permissions = (
+            ("view_data", "Can see available data from schools"),
+        )

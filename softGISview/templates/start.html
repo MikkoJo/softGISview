@@ -30,7 +30,9 @@ softgis_view base_map
     <h2>
         {% trans 'Select School' %}
     </h2>
-    <form name="schoolSelect">
+    <span class="error hidden" id="school_error">{% trans 'Please select school from a list' %}</span>
+    <br />
+    <form name="schoolSelect" id="schoolSelect_form">
 <!--        {{ csrf_token }}-->
         <select name="school" id="school">
             <option></option>
@@ -38,8 +40,12 @@ softgis_view base_map
                 <option value="{{ school.id }}">{{ school.name }}</option>
             {% endfor %}
         </select>
+        <br />
+        <span class="error hidden" id="error">{% trans 'Wrong password' %}</span>
+        <br />
+        <label for="pw">{% trans 'password' %}</label>
+        <input type="password" name="pw" id="pw" />
     </form>
-    </div>
     <div>
         {% include 'next_button.html' with next="school_journey_activity" %}
     </div>
