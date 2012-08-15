@@ -62,9 +62,11 @@ softgis_view base_map
     <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.barRenderer.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/jqplot/plugins/jqplot.json2.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
     <script type="text/javascript" src="{% url subcontent page_name='js_settings' file_type='js' %}"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/softgisview.js"></script>
 {% comment %}
     <script type="text/javascript">
         var feat_data = {% include 'clean_feat_data.json' %};

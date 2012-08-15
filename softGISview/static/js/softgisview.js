@@ -327,15 +327,19 @@ function time_classes_callback(response) {
 //    travel_buffersLayer.setVisibility(false);
 //    travel_time_buffersLayer.setVisibility(false);
     $("#content").html(response);
-    var s1 = [20,29,5,15,31];
-    var ticks = ['yli 7h', '4-6h', '2-3h', 'alle 1h', 'ei lainkaan'];
-//    var ticks = ['a', 'b', 'c', 'd', 'e'];
+//    var s1 = [20,29,5,15,31];
+    var ticks = [softgisview.translations.o5h,
+                 softgisview.translations.a2_4h,
+                 softgisview.translations.a1_2h,
+                 softgisview.translations.l1h,
+                 softgisview.translations.none];
+//    var ticks = ['yli 7h', '4-6h', '2-3h', 'alle 1h', 'ei lainkaan'];
     var plot1 = $.jqplot('time_use_chart', 'time_class', {
         dataRenderer: ajaxDataRenderer,
         dataRendererOptions: {
             callback_function: 'jsonurl'
         },
-        title: "Ajankäyttö",
+//        title: "Ajankäyttö",
         // The "seriesDefaults" option is an options object that will
         // be applied to all series in the chart.
         seriesDefaults:{
@@ -351,6 +355,11 @@ function time_classes_callback(response) {
             // Use a category axis on the x axis and use our custom ticks.
             xaxis: {
                 renderer: $.jqplot.CategoryAxisRenderer,
+                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                tickOptions: {
+                  angle: -30,
+                  fontSize: '10pt'
+                },                
                 ticks: ticks
             },
             // Pad the y axis just a little so bars can get close to, but
@@ -387,7 +396,7 @@ function screen_time_data_callback(response, textStatus) {
 //    var ticks = ['yli 7h', '4-6h', '2-3h', 'alle 1h', 'ei lainkaan'];
 //    var ticks = ['a', 'b', 'c', 'd', 'e'];
     var plot1 = $.jqplot('screen_time_chart_1', [response.tv_g], {
-        title: {text: "tv, dvd ja pelaaminen, tytöt",
+        title: {text: softgisview.translations.tv + ', ' + softgisview.translations.girls,
                 fontSize: '0.9em'
         },
         // The "seriesDefaults" option is an options object that will
@@ -395,7 +404,7 @@ function screen_time_data_callback(response, textStatus) {
         seriesDefaults: serDefaults
         });
     var plot2 = $.jqplot('screen_time_chart_2', [response.tv_b], {
-        title: {text: "tv, dvd ja pelaaminen, pojat",
+        title: {text: softgisview.translations.tv + ', ' + softgisview.translations.boys,
                 fontSize: '0.9em'
         },
         // The "seriesDefaults" option is an options object that will
@@ -404,7 +413,7 @@ function screen_time_data_callback(response, textStatus) {
         legend: { show:true, location: 'nw', placement: 'outside' }
         });
     var plot3 = $.jqplot('screen_time_chart_3', [response.sos_g], {
-        title: {text: "sosiaalinen media, tytöt",
+        title: {text: softgisview.translations.sos + ', ' + softgisview.translations.girls,
                 fontSize: '0.9em'
         },
         // The "seriesDefaults" option is an options object that will
@@ -412,7 +421,7 @@ function screen_time_data_callback(response, textStatus) {
         seriesDefaults: serDefaults
         });
     var plot4 = $.jqplot('screen_time_chart_4', [response.sos_b], {
-        title: {text: "sosiaalinen media, pojat",
+        title: {text: softgisview.translations.sos + ', ' + softgisview.translations.boys,
                 fontSize: '0.9em'
         },
         // The "seriesDefaults" option is an options object that will
@@ -515,9 +524,9 @@ function onFeatureSelect(feature) {
 //                             feature.geometry.getBounds().getCenterLonLat(),
                              map.getLonLatFromPixel(this.handlers.feature.down),
                              null,
-                             "<div style='font-size:.8em'>Homes: " + feature.attributes.homes +
-                             "<br>Travel: " + Math.round(feature.attributes.travel*100)/100 +
-                             " %<br>Time: " + Math.round(feature.attributes.time*100)/100 +" min</div>",
+                             "<div style='font-size:.8em'>" + softgisview.translations.homes + ": " + feature.attributes.homes +
+                             "<br>" + softgisview.translations.travel + ": " + Math.round(feature.attributes.travel*100)/100 +
+                             " %<br>" + softgisview.translations.time + ": " + Math.round(feature.attributes.time*100)/100 +" min</div>",
                              null, true, onPopupClose);
     feature.popup = popup;
     map.addPopup(popup);
@@ -1071,7 +1080,7 @@ var travel_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "Muu",
+                    name: softgisview.translations.other,
                     // apply this rule if no others apply
                     elseFilter: true,
                     symbolizer: {
@@ -1095,7 +1104,7 @@ var travel_time_style = new OpenLayers.Style(
         {
             rules: [
                 new OpenLayers.Rule({
-                    name: "noin 5 minuuttia",
+                    name: softgisview.translations.a5min,
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.LESS_THAN,
@@ -1109,7 +1118,7 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "noin 10 minuuttia",
+                    name: softgisview.translations.a10min,
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
@@ -1122,7 +1131,7 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "noin 20 minuuttia",
+                    name: softgisview.translations.a20min,
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
@@ -1135,7 +1144,7 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "noin puoli tuntia",
+                    name: softgisview.translations.a30min,
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
@@ -1148,7 +1157,7 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "noin 45 minuuttia",
+                    name: softgisview.translations.a45min,
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
@@ -1161,7 +1170,7 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "noin tunti",
+                    name: softgisview.translations.a60min,
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.GREATER_THAN,
@@ -1175,7 +1184,7 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "Muu",
+                    name: softgisview.translations.other,
                     // apply this rule if no others apply
                     elseFilter: true,
                     symbolizer: {

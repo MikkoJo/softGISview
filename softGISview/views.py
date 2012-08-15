@@ -15,7 +15,7 @@ from opensocial_people.models import Person
 
 import json
 from django.core.context_processors import request
-
+from django.utils.translation import ugettext as _
 
 def main(request):
     return render_to_response('welcome.html',
@@ -527,12 +527,12 @@ def get_screen_times(request):
         tv_eos_b = 100 - (tv_o2h_b + tv_u2h_b)
         sos_eos_b = 100 - (sos_o2h_b + sos_u2h_b)
         
-        tv_b = [['Yli 2h', tv_o2h_b],['Alle 2h', tv_u2h_b],['eos', tv_eos_b]]
-        sos_b = [['Yli 2h', sos_o2h_b],['Alle 2h', sos_u2h_b],['eos', sos_eos_b]]
+        tv_b = [[_(u'Over 2 hours'), tv_o2h_b],[_(u'Less than 2 hours'), tv_u2h_b],[_(u'No answer'), tv_eos_b]]
+        sos_b = [[_(u'Over 2 hours'), sos_o2h_b],[_(u'Less than 2 hours'), sos_u2h_b],[_(u'No answer'), sos_eos_b]]
 
     else:
-        tv_b = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
-        sos_b = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
+        tv_b = [[_(u'Over 2 hours'), 0],[_(u'Less than 2 hours'), 0],[_(u'No answer'), 0]]
+        sos_b = [[_(u'Over 2 hours'), 0],[_(u'Less than 2 hours'), 0],[_(u'No answer'), 0]]
         
     if len(girls) > 0:
         tv_over2h_girls = girls.filter(
@@ -561,12 +561,12 @@ def get_screen_times(request):
         tv_eos_g = 100 - (tv_o2h_g + tv_u2h_g)
         sos_eos_g = 100 - (sos_o2h_g + sos_u2h_g)
 
-        tv_g = [['Yli 2h', tv_o2h_g],['Alle 2h', tv_u2h_g],['eos', tv_eos_g]]
-        sos_g = [['Yli 2h', sos_o2h_g],['Alle 2h', sos_u2h_g],['eos', sos_eos_g]]
+        tv_g = [[_(u'Over 2 hours'), tv_o2h_g],[_(u'Less than 2 hours'), tv_u2h_g],[_(u'No answer'), tv_eos_g]]
+        sos_g = [[_(u'Over 2 hours'), sos_o2h_g],[_(u'Less than 2 hours'), sos_u2h_g],[_(u'No answer'), sos_eos_g]]
 
     else:
-        tv_g = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
-        sos_g = [['Yli 2h', 0],['Alle 2h', 0],['eos', 0]]
+        tv_g = [[_(u'Over 2 hours'), 0],[_(u'Less than 2 hours'), 0],[_(u'No answer'), 0]]
+        sos_g = [[_(u'Over 2 hours'), 0],[_(u'Less than 2 hours'), 0],[_(u'No answer'), 0]]
     
     return_json = {'tv_b': tv_b,
                    'sos_b': sos_b,
