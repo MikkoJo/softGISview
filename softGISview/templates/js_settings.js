@@ -28,5 +28,6 @@ softgisview.translations = {
     "sos": "{% trans 'Social networking' %}",
     "homes": "{% trans 'Homes' %}",
     "travel": "{% trans 'Active travel' %}",
-    "time": "{% trans 'Average active time spent' %}"
+    "time": "{% trans 'Average active time spent' %}",
+    "name": "{% trans 'Name' %}"
 }
