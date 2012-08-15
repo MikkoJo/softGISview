@@ -2,7 +2,7 @@
 
 {% block content %}
     <h2>
-        {% trans 'Ruutuaika' %}
+        {% trans 'Screen time' %}
     </h2>
     <input type="hidden" id="school" value="{{ school_id }}" />
     <div id="charts">
@@ -13,6 +13,7 @@
     </div>
     <div>
         {% include 'prev_button.html' with prev="time_classes" %}
+        <button type="button" class="navigationButton nextButton endButton" value="end">{% trans 'End' %}</button>
     </div>
 
 {% endblock %}
