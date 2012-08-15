@@ -75,15 +75,19 @@ function get_features_callback(response_data) {
         }*/
     }
     for(var layer in featArrays) {
-        mapOverlays[layer] = new OpenLayers.Layer.Vector(layer, {
+        if(mapOverlays[layer] === undefined) {
+            mapOverlays[layer] = new OpenLayers.Layer.Vector(layer, {
                             styleMap: new OpenLayers.StyleMap(styles[layer])
                     });
+            mapOverlays[layer].addFeatures(featArrays[layer]);
+            map.addLayer(mapOverlays[layer]);
+        }
     }
 
-    for(layer in mapOverlays) {
-        mapOverlays[layer].addFeatures(featArrays[layer]);
-        map.addLayer(mapOverlays[layer]);
-    }
+//    for(layer in mapOverlays) {
+//        mapOverlays[layer].addFeatures(featArrays[layer]);
+//        map.addLayer(mapOverlays[layer]);
+//    }
     toggleShow();
     toggleStyle();
  //   map.addLayers(mapOverLays);
@@ -275,7 +279,10 @@ function free_time_callback(response) {
     $('.select_table :checkbox').click(toggleShow);
     $(".color_select :radio").click(toggleStyle);
     $(".navigationButton").click(function () {
-            console.log(this.value);
+//            console.log(this.value);
+            for(var l in mapOverlays) {
+                mapOverlays[l].setVisibility(false);
+            }
             change_page(this.value, this.value + "_callback");
         }
         );
@@ -283,9 +290,13 @@ function free_time_callback(response) {
     
 }
 
+var ajaxRet = null;
 var ajaxDataRenderer = function(url, plot, options) {
 
-    var ret = null;
+    // Check if we alreays loaded the data
+    if(ajaxRet !== null) {
+        return ajaxRet;
+    }
     $.ajax({
         url: softgisview.settings.page_url + url,
         //url: "/softgisview/school_data",
@@ -297,20 +308,20 @@ var ajaxDataRenderer = function(url, plot, options) {
 //            if(callback_function !== undefined && typeof window[callback_function] === 'function') {
 //                window[callback_function](data);
 //            }
-            ret = data;
+            ajaxRet = data;
         },
         error: function(e) {
 //            if(callback_function !== undefined && typeof window[callback_function] === 'function') {
 //                window[callback_function](e);
 //            }
-            ret = [[0]];
+            ajaxRet = [[0]];
         },
         dataType: "json",
         beforeSend: function(xhr) {
             xhr.withCredentials = true;
         }
     });
-    return ret;
+    return ajaxRet;
 }
 function time_classes_callback(response) {
 //    travel_buffersLayer.setVisibility(false);
@@ -416,6 +427,8 @@ function school_journey_activity_callback(response) {
     $("#content").html(response);
     $(".color_select :radio").click(change_layer);
     
+    change_layer();
+    
     if($(".color_select").css("visibility") === "hidden") {
         $(".color_select").css("visibility", "visible");
     }
@@ -425,10 +438,14 @@ function school_journey_activity_callback(response) {
         }
         );
 }
+
+var stResponse = null;
 function screen_time_callback(response) {
-//    travel_buffersLayer.setVisibility(false);
-//    travel_time_buffersLayer.setVisibility(false);
+
     $("#content").html(response);
+    if(stResponse !== null) {
+        screen_time_data_callback(stResponse, '200');
+    }
     $.ajax({
         url: softgisview.settings.page_url + 'screen_time',
         //url: "/softgisview/school_data",
@@ -436,6 +453,7 @@ function screen_time_callback(response) {
         data: 'value=' + $("#school")[0].value,
 //        contentType: "application/json",
         success: function(data, textStatus) {
+            stResponse = data;
             screen_time_data_callback(data, textStatus);
         },
         error: function(e, textStatus) {
@@ -447,7 +465,13 @@ function screen_time_callback(response) {
         }
     });
 
-    $(".navigationButton").click(function () {
+    $(".endButton").click(function () {
+            console.log(this.value);
+            change_page(this.value, this.value + "_callback");
+            gnt.auth.logout();
+        }
+        );
+    $(".navigationButton.prevButton").click(function () {
             console.log(this.value);
             change_page(this.value, this.value + "_callback");
         }
@@ -455,6 +479,9 @@ function screen_time_callback(response) {
     
 }
 
+function end_callback(response) {
+    $("#content").html(response);
+}
 function change_page(page_name, callback_function) {
     
     $.ajax({
