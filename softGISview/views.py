@@ -292,13 +292,6 @@ def school_data(request):
     features = []
     
     features.append({
-                     "geometry": json.loads(school.coordinates.json),
-                     "properties": {
-                                    "name": school.name,
-                                    "type": "school"
-                                    }
-                     })
-    features.append({
                      "geometry": json.loads(b1000.json),
                      "properties": {
                                     "homes": len(m1000),
@@ -340,6 +333,13 @@ def school_data(request):
                                     "travel": ((m5001_to + m5001_from)) * 100,
                                     "time": t5001,
                                     "name": "5001"
+                                    }
+                     })
+    features.append({
+                     "geometry": json.loads(school.coordinates.json),
+                     "properties": {
+                                    "name": school.name,
+                                    "type": "school"
                                     }
                      })
     
