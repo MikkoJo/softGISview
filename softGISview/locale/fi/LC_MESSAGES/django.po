@@ -1,0 +1,296 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Mikko Johansson <mikko.johansson@aalto.fi>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-15 15:10+0300\n"
+"PO-Revision-Date: 2012-08-15 15:25+0300\n"
+"Last-Translator: Mikko Johansson <mikko.johansson@aalto.fi>\n"
+"Language-Team: SoftGIS team\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.0\n"
+
+#: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
+#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:22
+msgid "Over 2 hours"
+msgstr "Yli 2 tuntia"
+
+#: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
+#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:23
+msgid "Less than 2 hours"
+msgstr "Alle 2 tuntia"
+
+#: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
+#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:24
+msgid "No answer"
+msgstr "Ei vastausta"
+
+#: templates/end.html:2
+msgid "Thank you!"
+msgstr "Kiitos!"
+
+#: templates/end.html:4
+msgid "You can continue surfing the web or close the browser window"
+msgstr "Voit jatkaa surffailua tai sulkea selainikkunan"
+
+#: templates/free_time.html:5
+msgid "Free time activities"
+msgstr "Vapaa-ajanliikunta"
+
+#: templates/free_time.html:8 templates/welcome.html:30
+msgid "Select points"
+msgstr "Valitse pisteet"
+
+#: templates/free_time.html:15
+msgid "Competitive sports"
+msgstr "Ohjattu liikunta"
+
+#: templates/free_time.html:24
+msgid "Moving around"
+msgstr "Siirtyminen"
+
+#: templates/free_time.html:33
+msgid "Recreational sports"
+msgstr "Ohjaamaton liikunta"
+
+#: templates/free_time.html:44 templates/welcome.html:80
+msgid "Visualize points by type"
+msgstr "Visualisoi tyypin mukaan"
+
+#: templates/free_time.html:52 templates/welcome.html:88
+msgid "Visualize points by transport method"
+msgstr "Visualisoi kulkutavan mukaan"
+
+#: templates/free_time.html:60 templates/welcome.html:96
+msgid "Visualize points by reachability"
+msgstr "Visualisoi saavutettavuuden mukaan"
+
+#: templates/free_time.html:68 templates/school_journey_activity.html:38
+#: templates/welcome.html:104
+msgid "Legend"
+msgstr "Legenda"
+
+#: templates/free_time.html:73 templates/welcome.html:109
+msgid "Transport method"
+msgstr "Kulkutapa"
+
+#: templates/free_time.html:81 templates/welcome.html:114
+msgid "walking or by bike"
+msgstr "kävellen tai pyöräillen"
+
+#: templates/free_time.html:89 templates/welcome.html:122
+msgid "by public transportation"
+msgstr "julkisilla"
+
+#: templates/free_time.html:97 templates/welcome.html:130
+msgid "by car "
+msgstr "autolla"
+
+#: templates/free_time.html:105 templates/welcome.html:138
+msgid "by moped"
+msgstr "mopolla"
+
+#: templates/free_time.html:110 templates/welcome.html:146
+msgid "Reachability"
+msgstr "Saavutettavuus"
+
+#: templates/free_time.html:118 templates/welcome.html:151
+msgid "alone"
+msgstr "yksin"
+
+#: templates/free_time.html:126 templates/welcome.html:159
+msgid "with friends"
+msgstr "kavereiden kanssa"
+
+#: templates/free_time.html:134 templates/welcome.html:167
+msgid "with adults"
+msgstr "aikuisten kanssa"
+
+#: templates/js_settings.js:10 templates/trans.html:3
+msgid "other"
+msgstr "muu"
+
+#: templates/js_settings.js:11 templates/trans.html:4
+msgid "about five minutes"
+msgstr "noin 5 minuuttia"
+
+#: templates/js_settings.js:12 templates/trans.html:5
+msgid "about ten minutes"
+msgstr "noin 10 minuuttia"
+
+#: templates/js_settings.js:13 templates/trans.html:6
+msgid "about twenty minutes"
+msgstr "noin 20 minuuttia"
+
+#: templates/js_settings.js:14 templates/trans.html:7
+msgid "about half an hour"
+msgstr "noin puoli tuntia"
+
+#: templates/js_settings.js:15 templates/trans.html:8
+msgid "about three quarters"
+msgstr "noin 45 minuuttia"
+
+#: templates/js_settings.js:16 templates/trans.html:9
+msgid "about an hour"
+msgstr "noin tunti"
+
+#: templates/js_settings.js:17 templates/trans.html:10
+msgid "Over 5 hours"
+msgstr "Yli 5 tuntia"
+
+#: templates/js_settings.js:18 templates/trans.html:11
+msgid "2-4 hours"
+msgstr "2-4 tuntia"
+
+#: templates/js_settings.js:19
+msgid "1-2 hours"
+msgstr "1-2 tuntia"
+
+#: templates/js_settings.js:20
+#, fuzzy
+msgid "Less than 1 hour"
+msgstr "Alle tunti"
+
+#: templates/js_settings.js:21
+msgid "None"
+msgstr "Ei lainkaan"
+
+#: templates/js_settings.js:25
+msgid "girls"
+msgstr "tytöt"
+
+#: templates/js_settings.js:26
+msgid "boys"
+msgstr "pojat"
+
+#: templates/js_settings.js:27
+msgid "TV, DVDs, or playing"
+msgstr "tv, dvd tai pelaaminen"
+
+#: templates/js_settings.js:28
+msgid "Social networking"
+msgstr "sosiaalinen media"
+
+#: templates/js_settings.js:29 templates/trans.html:23
+msgid "Homes"
+msgstr "Koteja"
+
+#: templates/js_settings.js:30 templates/trans.html:24
+msgid "Active travel"
+msgstr "Kävellen tai pyöräillen"
+
+#: templates/js_settings.js:31 templates/trans.html:25
+msgid "Average active time spent"
+msgstr "Keskimääräinen aktiivisesti kuljettu aika"
+
+#: templates/js_settings.js:32 templates/trans.html:26
+msgid "Name"
+msgstr "Nimi"
+
+#: templates/next_button.html:2
+msgid "Next"
+msgstr "Seuraava"
+
+#: templates/prev_button.html:2
+msgid "Previous"
+msgstr "Edellinen"
+
+#: templates/school_journey_activity.html:4
+#, fuzzy
+msgid "School Journeys"
+msgstr "Koulumatkat"
+
+#: templates/school_journey_activity.html:22
+msgid "Visualize by amount of students walking or biking their school journeys"
+msgstr "Visualisoi kävellen tai pyöräillen kulkevien oppilaiden osuuden mukaan"
+
+#: templates/school_journey_activity.html:30
+msgid "Visualize on average active time spent on school journeys"
+msgstr "Visualisoi keskimääräisen aktiivisesti kuljetun ajan mukaan"
+
+#: templates/screen_time.html:5
+msgid "Screen time"
+msgstr "Ruutuaika"
+
+#: templates/screen_time.html:16
+msgid "End"
+msgstr "Lopetus"
+
+#: templates/start.html:19 templates/travel.html:19 templates/welcome.html:18
+msgid "Children"
+msgstr "Lapset"
+
+#: templates/start.html:31
+msgid "Select School"
+msgstr "Valitse koulu"
+
+#: templates/start.html:33
+msgid "Please select school from a list"
+msgstr "Ole hyvä ja valitse koulu listasta"
+
+#: templates/start.html:44
+msgid "Wrong password"
+msgstr "Väärä salasana"
+
+#: templates/start.html:46
+msgid "password"
+msgstr "sala"
+
+#: templates/start.html:50
+msgid "Start"
+msgstr "Aloita"
+
+#: templates/time_classes.html:5
+msgid "Exercise or play in free time"
+msgstr "Liikkuminen kouluajan ulkopuolella"
+
+#: templates/trans.html:14
+msgid "Test2"
+msgstr ""
+
+#: templates/travel.html:35
+msgid "Time spent walking or cycling on school yourney"
+msgstr ""
+
+#: templates/travel.html:37
+msgid "minutes"
+msgstr ""
+
+#: templates/travel.html:40
+msgid "Time spent exercising or playing in free time"
+msgstr ""
+
+#: templates/travel.html:42 templates/travel.html.py:47
+msgid "hours"
+msgstr ""
+
+#: templates/travel.html:45
+msgid "Time spent watching TV"
+msgstr ""
+
+#: templates/welcome.html:37
+msgid "Positive"
+msgstr ""
+
+#: templates/welcome.html:40
+msgid "Negative"
+msgstr ""
+
+#: templates/welcome.html:45
+msgid "Social"
+msgstr ""
+
+#: templates/welcome.html:56
+msgid "Doing things"
+msgstr ""
+
+#: templates/welcome.html:67
+msgid "Feeling"
+msgstr ""

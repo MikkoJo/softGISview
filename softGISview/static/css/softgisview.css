@@ -108,7 +108,7 @@ div#time_use_chart {
 }
 
 #screen_time_chart_1, #screen_time_chart_2, #screen_time_chart_3, #screen_time_chart_4 {
-    width: 160px;
+    width: 150px;
     height: 200px;
 }
 
