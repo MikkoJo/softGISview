@@ -198,12 +198,14 @@ function update_legend() {
     var table = $("#legendTable");
     table.html('');
     for (var i = 0; i < r.length; i++) {
-       var tr = $(document.createElement("tr")); 
-       tr.append($('<td></td>', {'class': 'legend_color'}));
-       tr.append($('<td></td>', {'class': 'legend_label'}));
-       tr.children(".legend_color").css("background-color", r[i].symbolizer.fillColor);
-       tr.children(".legend_label").html(r[i].name);
-       tr.appendTo(table);
+        if(r[i].name !== null) {
+            var tr = $(document.createElement("tr")); 
+            tr.append($('<td></td>', {'class': 'legend_color'}));
+            tr.append($('<td></td>', {'class': 'legend_label'}));
+            tr.children(".legend_color").css("background-color", r[i].symbolizer.fillColor);
+            tr.children(".legend_label").html(r[i].name);
+            tr.appendTo(table);
+        }
     }
 /*    $("#legendTable tr").each(function(index) {
         var r = layer.styleMap.styles["default"].rules;
@@ -519,14 +521,21 @@ function onPopupClose(evt) {
     selectControl.unselect(selectedFeature);
 }
 function onFeatureSelect(feature) {
+    var popupContent;
     selectedFeature = feature;
+    if(feature.attributes.type === 'school') {
+        popupContent = "<div style='font-size:1.1em'>" + feature.attributes.name + "</div>";
+    }
+    else {
+        popupContent = "<div style='font-size:.8em'>" + softgisview.translations.homes + ": " + feature.attributes.homes +
+                     "<br>" + softgisview.translations.travel + ": " + Math.round(feature.attributes.travel*100)/100 +
+                     " %<br>" + softgisview.translations.time + ": " + Math.round(feature.attributes.time*100)/100 +" min</div>";
+    }
     var popup = new OpenLayers.Popup.FramedCloud("popup", 
 //                             feature.geometry.getBounds().getCenterLonLat(),
                              map.getLonLatFromPixel(this.handlers.feature.down),
                              null,
-                             "<div style='font-size:.8em'>" + softgisview.translations.homes + ": " + feature.attributes.homes +
-                             "<br>" + softgisview.translations.travel + ": " + Math.round(feature.attributes.travel*100)/100 +
-                             " %<br>" + softgisview.translations.time + ": " + Math.round(feature.attributes.time*100)/100 +" min</div>",
+                             popupContent,
                              null, true, onPopupClose);
     feature.popup = popup;
     map.addPopup(popup);
@@ -1014,6 +1023,21 @@ var travel_style = new OpenLayers.Style(
         {
             rules: [
                 new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "type", // the "foo" feature attribute
+                        value: "school"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        pointRadius: 7,
+                        graphicName: 'star',
+                        fillColor:  "#0000CC",
+                        strokeColor: "#000099"
+                    }
+                }),
+                new OpenLayers.Rule({
                     name: "0 - 20%",
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
@@ -1103,6 +1127,21 @@ var travel_time_style = new OpenLayers.Style(
         // the second argument will include all rules
         {
             rules: [
+                new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "type", // the "foo" feature attribute
+                        value: "school"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        pointRadius: 7,
+                        graphicName: 'star',
+                        fillColor:  "#0000CC",
+                        strokeColor: "#000099"
+                    }
+                }),
                 new OpenLayers.Rule({
                     name: softgisview.translations.a5min,
                     // a rule contains an optional filter
