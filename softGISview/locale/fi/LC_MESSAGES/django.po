@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-15 15:10+0300\n"
-"PO-Revision-Date: 2012-08-15 15:25+0300\n"
+"PO-Revision-Date: 2012-08-15 15:57+0300\n"
 "Last-Translator: Mikko Johansson <mikko.johansson@aalto.fi>\n"
 "Language-Team: SoftGIS team\n"
 "Language: fi\n"
@@ -154,7 +154,6 @@ msgid "1-2 hours"
 msgstr "1-2 tuntia"
 
 #: templates/js_settings.js:20
-#, fuzzy
 msgid "Less than 1 hour"
 msgstr "Alle tunti"
 
@@ -203,7 +202,6 @@ msgid "Previous"
 msgstr "Edellinen"
 
 #: templates/school_journey_activity.html:4
-#, fuzzy
 msgid "School Journeys"
 msgstr "Koulumatkat"
 
