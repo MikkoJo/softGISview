@@ -593,8 +593,11 @@ function init_teacher() {
     selectControl = new OpenLayers.Control.SelectFeature([travel_buffersLayer, travel_time_buffersLayer], {
                                                          onSelect: onFeatureSelect,
                                                          onUnselect: onFeatureUnselect,
-                                                         toggle: true    
+                                                         toggle: true
     });
+    
+    //enable map dragging over feature
+    selectControl.handlers.feature.stopDown = false;
     map.addControl(selectControl);
     selectControl.activate();
 //    $(".color_select :radio").click(change_layer);
