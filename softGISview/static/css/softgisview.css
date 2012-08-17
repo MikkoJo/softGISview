@@ -7,7 +7,7 @@
 
 #content {
     margin-left: 30px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 #content table {
@@ -103,7 +103,7 @@ select#school {
 }
 
 div#time_use_chart {
-    width: 340px;
+    width: 335px;
     height: 200px;
 }
 
