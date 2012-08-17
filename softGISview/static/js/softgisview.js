@@ -150,7 +150,7 @@ function get_profile(callback) {
 
 function toggleStyle() {
     var t = $(".color_select :radio").serializeArray();
-    console.log(t[0].value);
+    //console.log(t[0].value);
     for(i in mapOverlays) {
         mapOverlays[i].styleMap = 
             new OpenLayers.StyleMap(
@@ -169,7 +169,7 @@ function toggleShow() {
     //console.log(field.value);
     t.push(field.value);
     });
-    console.log(t);
+    //console.log(t);
     for(var layer in mapOverlays) {
         if($.inArray(layer, t) !== -1) {
             mapOverlays[layer].setVisibility(true);
@@ -372,7 +372,7 @@ function time_classes_callback(response) {
         }        
         });
     $(".navigationButton").click(function () {
-            console.log($(this).val());
+            //console.log($(this).val());
             change_page($(this).val(), $(this).val() + "_callback");
         }
         );
@@ -443,7 +443,7 @@ function school_journey_activity_callback(response) {
         $(".color_select").css("visibility", "visible");
     }
     $(".navigationButton").click(function () {
-            console.log($(this).val());
+            //console.log($(this).val());
             change_page($(this).val(), $(this).val() + "_callback");
         }
         );
@@ -476,13 +476,13 @@ function screen_time_callback(response) {
     });
 
     $(".endButton").click(function () {
-            console.log($(this).val());
+            //console.log($(this).val());
             change_page($(this).val(), $(this).val() + "_callback");
             gnt.auth.logout();
         }
         );
     $(".navigationButton.prevButton").click(function () {
-            console.log($(this).val());
+            //console.log($(this).val());
             change_page($(this).val(), $(this).val() + "_callback");
         }
         );
