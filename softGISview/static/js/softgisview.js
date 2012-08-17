@@ -99,7 +99,6 @@ function get_features_callback(response_data) {
 }
 function get_features(callback_function) {
     //For test
-    // TODO: create a proper geojson_rest api call
     //callback(feat_data);
     
     $.ajax({
@@ -285,7 +284,7 @@ function free_time_callback(response) {
             for(var l in mapOverlays) {
                 mapOverlays[l].setVisibility(false);
             }
-            change_page(this.value, this.value + "_callback");
+            change_page($(this).val(), $(this).val() + "_callback");
         }
         );
     get_features(get_features_callback);
@@ -373,8 +372,8 @@ function time_classes_callback(response) {
         }        
         });
     $(".navigationButton").click(function () {
-            console.log(this.value);
-            change_page(this.value, this.value + "_callback");
+            console.log($(this).val());
+            change_page($(this).val(), $(this).val() + "_callback");
         }
         );
     
@@ -444,8 +443,8 @@ function school_journey_activity_callback(response) {
         $(".color_select").css("visibility", "visible");
     }
     $(".navigationButton").click(function () {
-            console.log(this.value);
-            change_page(this.value, this.value + "_callback");
+            console.log($(this).val());
+            change_page($(this).val(), $(this).val() + "_callback");
         }
         );
 }
@@ -477,14 +476,14 @@ function screen_time_callback(response) {
     });
 
     $(".endButton").click(function () {
-            console.log(this.value);
-            change_page(this.value, this.value + "_callback");
+            console.log($(this).val());
+            change_page($(this).val(), $(this).val() + "_callback");
             gnt.auth.logout();
         }
         );
     $(".navigationButton.prevButton").click(function () {
-            console.log(this.value);
-            change_page(this.value, this.value + "_callback");
+            console.log($(this).val());
+            change_page($(this).val(), $(this).val() + "_callback");
         }
         );
     
@@ -666,7 +665,7 @@ styles['feelGood'] = new OpenLayers.Style(
         {
             graphicName: 'triangle',
             strokeColor: "#8B2A90",
-            fillColor:  "#8B2A90",
+            fillColor:  "#8B2A90"
         }));
         
 styles['feelBad'] = new OpenLayers.Style(
@@ -676,7 +675,7 @@ styles['feelBad'] = new OpenLayers.Style(
         {
             graphicName: 'square',
             strokeColor: "#8B2A90",
-            fillColor:  "#8B2A90",
+            fillColor:  "#8B2A90"
         }));
 styles['thingsGood'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
@@ -685,7 +684,7 @@ styles['thingsGood'] = new OpenLayers.Style(
         {
             graphicName: 'triangle',
             strokeColor: "#6CCFF5",
-            fillColor:  "#6CCFF5",
+            fillColor:  "#6CCFF5"
         }));
         
 styles['thingsBad'] = new OpenLayers.Style(
@@ -695,7 +694,7 @@ styles['thingsBad'] = new OpenLayers.Style(
         {
             graphicName: 'square',
             strokeColor: "#6CCFF5",
-            fillColor:  "#6CCFF5",
+            fillColor:  "#6CCFF5"
         }));
 styles['atmosphereGood'] = new OpenLayers.Style(
         // the first argument is a base symbolizer
@@ -704,7 +703,7 @@ styles['atmosphereGood'] = new OpenLayers.Style(
         {
             graphicName: 'triangle',
             strokeColor: "#F99F23",
-            fillColor:  "#F99F23",
+            fillColor:  "#F99F23"
         }));
         
 styles['atmosphereBad'] = new OpenLayers.Style(
@@ -714,7 +713,7 @@ styles['atmosphereBad'] = new OpenLayers.Style(
         {
             graphicName: 'square',
             strokeColor: "#F99F23",
-            fillColor:  "#F99F23",
+            fillColor:  "#F99F23"
         }));
 
 styles['competitive'] = new OpenLayers.Style(
@@ -724,7 +723,7 @@ styles['competitive'] = new OpenLayers.Style(
         {
             graphicName: 'square',
             strokeColor: "#F99F23",
-            fillColor:  "#F99F23",
+            fillColor:  "#F99F23"
         }));
 
 styles['moving'] = new OpenLayers.Style(
@@ -734,7 +733,7 @@ styles['moving'] = new OpenLayers.Style(
         {
             graphicName: 'triangle',
             strokeColor: "#6CCFF5",
-            fillColor:  "#6CCFF5",
+            fillColor:  "#6CCFF5"
         }));
 
 styles['recreational'] = new OpenLayers.Style(
@@ -744,7 +743,7 @@ styles['recreational'] = new OpenLayers.Style(
         {
             graphicName: 'circle',
             strokeColor: "#8B2A90",
-            fillColor:  "#8B2A90",
+            fillColor:  "#8B2A90"
         }));
 
 var type_style = new OpenLayers.Style(
