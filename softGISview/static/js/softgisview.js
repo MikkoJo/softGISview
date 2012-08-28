@@ -581,7 +581,7 @@ var travel_buffersLayer,
     selectControl;
 function init_teacher() {
     $.jqplot.config.enablePlugins = true;
-    map.setCenter(new OpenLayers.LonLat(405113.46202689, 6680497.7647955), 3);
+    map.setCenter(new OpenLayers.LonLat(328388.37524334, 6821434.1800022), 3);
     travel_buffersLayer = new OpenLayers.Layer.Vector("Travel Buffers Layer", {
                             styleMap: new OpenLayers.StyleMap(travel_style)
                     });
