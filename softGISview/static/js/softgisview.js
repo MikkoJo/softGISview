@@ -1040,12 +1040,28 @@ var travel_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
-                    name: "0 - 20%",
+                    name: "0%",
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.LESS_THAN_OR_EQUAL_TO,
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
                         property: "travel", // the "foo" feature attribute
-                        value: 20
+                        value: 0
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#FFFFFF",
+                        fillOpacity: 0,
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
+                    name: "1 - 20%",
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
+                        property: "travel", // the "foo" feature attribute
+                        lowerBoundary: 0.00000000001,
+                        upperBoundary: 20
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
@@ -1145,12 +1161,28 @@ var travel_time_style = new OpenLayers.Style(
                     }
                 }),
                 new OpenLayers.Rule({
+                    name: softgisview.translations.a0min,
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                        property: "time", // the "foo" feature attribute
+                        value: 0
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                        fillColor:  "#FFFFFF",
+                        fillOpacity: 0,
+                        strokeColor: "#CCEBC5"
+                    }
+                }),
+                new OpenLayers.Rule({
                     name: softgisview.translations.a5min,
                     // a rule contains an optional filter
                     filter: new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.LESS_THAN,
+                        type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time", // the "foo" feature attribute
-                        value: 6
+                        lowerBoundary: 0.5,
+                        upperBoundary: 6
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
@@ -1163,7 +1195,7 @@ var travel_time_style = new OpenLayers.Style(
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.BETWEEN,
                         property: "time",
-                        lowerBoundary: 6,
+                        lowerBoundary: 6.0000001,
                         upperBoundary: 15
                     }),
                     symbolizer: {

@@ -8,6 +8,7 @@ softgisview.settings = {
 
 softgisview.translations = {
     "other": "{% trans 'other' %}",
+    "a0min": "{% trans 'No homes' %}",
     "a5min": "{% trans 'about five minutes' %}",
     "a10min": "{% trans 'about ten minutes' %}",
     "a20min": "{% trans 'about twenty minutes' %}",

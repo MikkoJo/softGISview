@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-15 15:10+0300\n"
-"PO-Revision-Date: 2012-08-15 15:57+0300\n"
+"POT-Creation-Date: 2012-08-28 14:04+0300\n"
+"PO-Revision-Date: 2012-08-28 14:06+0300\n"
 "Last-Translator: Mikko Johansson <mikko.johansson@aalto.fi>\n"
 "Language-Team: SoftGIS team\n"
 "Language: fi\n"
@@ -18,17 +18,17 @@ msgstr ""
 "X-Generator: Virtaal 0.7.0\n"
 
 #: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
-#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:22
+#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:23
 msgid "Over 2 hours"
 msgstr "Yli 2 tuntia"
 
 #: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
-#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:23
+#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:24
 msgid "Less than 2 hours"
 msgstr "Alle 2 tuntia"
 
 #: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
-#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:24
+#: views.py:565 views.py:568 views.py:569 templates/js_settings.js:25
 msgid "No answer"
 msgstr "Ei vastausta"
 
@@ -72,8 +72,7 @@ msgstr "Visualisoi kulkutavan mukaan"
 msgid "Visualize points by reachability"
 msgstr "Visualisoi saavutettavuuden mukaan"
 
-#: templates/free_time.html:68 templates/school_journey_activity.html:38
-#: templates/welcome.html:104
+#: templates/free_time.html:68 templates/welcome.html:104
 msgid "Legend"
 msgstr "Legenda"
 
@@ -113,83 +112,87 @@ msgstr "kavereiden kanssa"
 msgid "with adults"
 msgstr "aikuisten kanssa"
 
-#: templates/js_settings.js:10 templates/trans.html:3
+#: templates/js_settings.js:10
 msgid "other"
 msgstr "muu"
 
-#: templates/js_settings.js:11 templates/trans.html:4
+#: templates/js_settings.js:11
+msgid "No homes"
+msgstr "Ei koteja"
+
+#: templates/js_settings.js:12
 msgid "about five minutes"
 msgstr "noin 5 minuuttia"
 
-#: templates/js_settings.js:12 templates/trans.html:5
+#: templates/js_settings.js:13
 msgid "about ten minutes"
 msgstr "noin 10 minuuttia"
 
-#: templates/js_settings.js:13 templates/trans.html:6
+#: templates/js_settings.js:14
 msgid "about twenty minutes"
 msgstr "noin 20 minuuttia"
 
-#: templates/js_settings.js:14 templates/trans.html:7
+#: templates/js_settings.js:15
 msgid "about half an hour"
 msgstr "noin puoli tuntia"
 
-#: templates/js_settings.js:15 templates/trans.html:8
+#: templates/js_settings.js:16
 msgid "about three quarters"
 msgstr "noin 45 minuuttia"
 
-#: templates/js_settings.js:16 templates/trans.html:9
+#: templates/js_settings.js:17
 msgid "about an hour"
 msgstr "noin tunti"
 
-#: templates/js_settings.js:17 templates/trans.html:10
+#: templates/js_settings.js:18
 msgid "Over 5 hours"
 msgstr "Yli 5 tuntia"
 
-#: templates/js_settings.js:18 templates/trans.html:11
+#: templates/js_settings.js:19
 msgid "2-4 hours"
 msgstr "2-4 tuntia"
 
-#: templates/js_settings.js:19
+#: templates/js_settings.js:20
 msgid "1-2 hours"
 msgstr "1-2 tuntia"
 
-#: templates/js_settings.js:20
+#: templates/js_settings.js:21
 msgid "Less than 1 hour"
 msgstr "Alle tunti"
 
-#: templates/js_settings.js:21
+#: templates/js_settings.js:22
 msgid "None"
 msgstr "Ei lainkaan"
 
-#: templates/js_settings.js:25
+#: templates/js_settings.js:26
 msgid "girls"
 msgstr "tytöt"
 
-#: templates/js_settings.js:26
+#: templates/js_settings.js:27
 msgid "boys"
 msgstr "pojat"
 
-#: templates/js_settings.js:27
+#: templates/js_settings.js:28
 msgid "TV, DVDs, or playing"
 msgstr "tv, dvd tai pelaaminen"
 
-#: templates/js_settings.js:28
+#: templates/js_settings.js:29
 msgid "Social networking"
 msgstr "sosiaalinen media"
 
-#: templates/js_settings.js:29 templates/trans.html:23
+#: templates/js_settings.js:30
 msgid "Homes"
 msgstr "Koteja"
 
-#: templates/js_settings.js:30 templates/trans.html:24
+#: templates/js_settings.js:31
 msgid "Active travel"
 msgstr "Kävellen tai pyöräillen"
 
-#: templates/js_settings.js:31 templates/trans.html:25
+#: templates/js_settings.js:32
 msgid "Average active time spent"
 msgstr "Keskimääräinen aktiivisesti kuljettu aika"
 
-#: templates/js_settings.js:32 templates/trans.html:26
+#: templates/js_settings.js:33
 msgid "Name"
 msgstr "Nimi"
 
@@ -248,10 +251,6 @@ msgstr "Aloita"
 #: templates/time_classes.html:5
 msgid "Exercise or play in free time"
 msgstr "Liikkuminen kouluajan ulkopuolella"
-
-#: templates/trans.html:14
-msgid "Test2"
-msgstr ""
 
 #: templates/travel.html:35
 msgid "Time spent walking or cycling on school yourney"
