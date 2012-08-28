@@ -414,7 +414,7 @@ function screen_time_data_callback(response, textStatus) {
         legend: { show:true, location: 'nw', placement: 'outside' }
         });
     var plot3 = $.jqplot('screen_time_chart_3', [response.sos_g], {
-        title: {text: softgisview.translations.sos + ', ' + softgisview.translations.girls,
+        title: {text: softgisview.translations.sos + ', <br />' + softgisview.translations.girls,
                 fontSize: '0.9em'
         },
         // The "seriesDefaults" option is an options object that will
