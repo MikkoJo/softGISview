@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-28 14:04+0300\n"
-"PO-Revision-Date: 2012-08-28 14:06+0300\n"
+"PO-Revision-Date: 2012-09-05 13:49+0300\n"
 "Last-Translator: Mikko Johansson <mikko.johansson@aalto.fi>\n"
 "Language-Team: SoftGIS team\n"
 "Language: fi\n"
@@ -25,7 +25,7 @@ msgstr "Yli 2 tuntia"
 #: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
 #: views.py:565 views.py:568 views.py:569 templates/js_settings.js:24
 msgid "Less than 2 hours"
-msgstr "Alle 2 tuntia"
+msgstr "2 tuntia tai alle"
 
 #: views.py:530 views.py:531 views.py:534 views.py:535 views.py:564
 #: views.py:565 views.py:568 views.py:569 templates/js_settings.js:25
@@ -42,7 +42,7 @@ msgstr "Voit jatkaa surffailua tai sulkea selainikkunan"
 
 #: templates/free_time.html:5
 msgid "Free time activities"
-msgstr "Vapaa-ajanliikunta"
+msgstr "Tärkeät liikuntapaikat"
 
 #: templates/free_time.html:8 templates/welcome.html:30
 msgid "Select points"
@@ -62,15 +62,15 @@ msgstr "Ohjaamaton liikunta"
 
 #: templates/free_time.html:44 templates/welcome.html:80
 msgid "Visualize points by type"
-msgstr "Visualisoi tyypin mukaan"
+msgstr "Näytä erilaisten paikkojen mukaan"
 
 #: templates/free_time.html:52 templates/welcome.html:88
 msgid "Visualize points by transport method"
-msgstr "Visualisoi kulkutavan mukaan"
+msgstr "Näytä kulkutavan mukaan"
 
 #: templates/free_time.html:60 templates/welcome.html:96
 msgid "Visualize points by reachability"
-msgstr "Visualisoi saavutettavuuden mukaan"
+msgstr "Näytä saavutettavuuden mukaan"
 
 #: templates/free_time.html:68 templates/welcome.html:104
 msgid "Legend"
@@ -98,7 +98,7 @@ msgstr "mopolla"
 
 #: templates/free_time.html:110 templates/welcome.html:146
 msgid "Reachability"
-msgstr "Saavutettavuus"
+msgstr "Kenen kanssa tänne tullaan"
 
 #: templates/free_time.html:118 templates/welcome.html:151
 msgid "alone"
@@ -210,15 +210,15 @@ msgstr "Koulumatkat"
 
 #: templates/school_journey_activity.html:22
 msgid "Visualize by amount of students walking or biking their school journeys"
-msgstr "Visualisoi kävellen tai pyöräillen kulkevien oppilaiden osuuden mukaan"
+msgstr "Näytä kävellen tai pyöräillen kulkevien oppilaiden osuudet"
 
 #: templates/school_journey_activity.html:30
 msgid "Visualize on average active time spent on school journeys"
-msgstr "Visualisoi keskimääräisen aktiivisesti kuljetun ajan mukaan"
+msgstr "Näytä kävellen tai pyöräillen kuljetun keskimääräisen matka-ajan mukaan"
 
 #: templates/screen_time.html:5
 msgid "Screen time"
-msgstr "Ruutuaika"
+msgstr "Ruutuaika (tuntia päivässä)"
 
 #: templates/screen_time.html:16
 msgid "End"
@@ -250,7 +250,7 @@ msgstr "Aloita"
 
 #: templates/time_classes.html:5
 msgid "Exercise or play in free time"
-msgstr "Liikkuminen kouluajan ulkopuolella"
+msgstr "Reipastehoinen liikunta kouluajan ulkopuolella (tuntia päivässä)"
 
 #: templates/travel.html:35
 msgid "Time spent walking or cycling on school yourney"
