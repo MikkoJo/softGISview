@@ -121,13 +121,13 @@ div#time_use_chart {
 }
 
 #charts {
-    margin-top: 50px;
+    margin-top: 70px;
 }
 
 table.jqplot-table-legend {
     top: -75px !important;
     right: auto !important;
-    left: -30px;
+    left: -197px;
 }
 
 div.jqplot-pie-series.jqplot-data-label {
