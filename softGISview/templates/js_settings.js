@@ -15,7 +15,7 @@ softgisview.translations = {
     "a30min": "{% trans 'about half an hour' %}",
     "a45min": "{% trans 'about three quarters' %}",
     "a60min": "{% trans 'about an hour' %}",
-    "o5h": "{% trans 'Over 5 hours' %}",
+    "o5h": "{% trans 'Over 4 hours' %}",
     "a2_4h": "{% trans '2-4 hours' %}",
     "a1_2h": "{% trans '1-2 hours' %}",
     "l1h": "{% trans 'Less than 1 hour' %}",
