@@ -47,6 +47,8 @@ def school_data(request):
 #    js_school = school.values_list('name')[0][0]
     js_school = school.name
     js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #some unicode problem with school name
+    js_school = js_school.replace("ä", "\u00e4")
     #Get respondants for school
     users = Person.objects.filter(time__expire_time=None).filter(
                                   json_data__json_string__contains='"school": "%s"' % js_school)
@@ -363,6 +365,8 @@ def subcontent(request, page_name, file_type):
 #    js_school = school.values_list('name')[0][0]
     js_school = school.name
     js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #some unicode problem with school name
+    js_school = js_school.replace("ä", "\u00e4")
     #Get respondants for school
     users = Person.objects.filter(time__expire_time=None).filter(
                                   json_data__json_string__contains='"school": "%s"' % js_school)
@@ -397,6 +401,8 @@ def get_free_time_features(request):
 #    js_school = school.values_list('name')[0][0]
     js_school = school.name
     js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #some unicode problem with school name
+    js_school = js_school.replace("ä", "\u00e4")
     #Get respondants for school
     users = Person.objects.filter(time__expire_time=None).filter(
                                   json_data__json_string__contains='"school": "%s"' % js_school)
@@ -452,6 +458,8 @@ def get_time_classes(request):
 #    js_school = school.values_list('name')[0][0]
     js_school = school.name
     js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #some unicode problem with school name
+    js_school = js_school.replace("ä", "\u00e4")
     #Get respondants for school
     users = Person.objects.filter(time__expire_time=None).filter(
                                   json_data__json_string__contains='"school": "%s"' % js_school)
@@ -491,6 +499,8 @@ def get_screen_times(request):
 #    js_school = school.values_list('name')[0][0]
     js_school = school.name
     js_school = js_school.split(",")[0].replace(" ", "_", 1).lower()
+    #some unicode problem with school name
+    js_school = js_school.replace("ä", "\u00e4")
     #Get respondants for school
     users = Person.objects.filter(time__expire_time=None).filter(
                                   json_data__json_string__contains='"school": "%s"' % js_school)
