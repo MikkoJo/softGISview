@@ -124,7 +124,7 @@ def school_data(request):
         m1000_from = float(len(m1000_from))/len(m1000)
         
         for u in m1000_users:
-            if type(u.json_data.get("school_journey")) != None:
+            if u.json_data.get("school_journey") != None:
                 try:
                     t1000 += float(u.json_data.get("school_journey")["time_from_school"])
                 except ValueError:
@@ -162,7 +162,7 @@ def school_data(request):
         m3000_from = float(len(m3000_from))/len(m3000)
 
         for u in m3000_users:
-            if type(u.json_data.get("school_journey")) != None:
+            if u.json_data.get("school_journey") != None:
                 try:
                     t3000 += float(u.json_data.get("school_journey")["time_from_school"])
                 except ValueError:
@@ -200,7 +200,7 @@ def school_data(request):
         m5000_from = float(len(m5000_from))/len(m5000)
 
         for u in m5000_users:
-            if type(u.json_data.get("school_journey")) != None:
+            if u.json_data.get("school_journey") != None:
                 try:
                     t5000 += float(u.json_data.get("school_journey")["time_from_school"])
                 except ValueError:
@@ -238,7 +238,7 @@ def school_data(request):
         m5001_from = float(len(m5001_from))/len(m5001)
 
         for u in m5001_users:
-            if type(u.json_data.get("school_journey")) != None:
+            if u.json_data.get("school_journey") != None:
                 try:
                     t5001 += float(u.json_data.get("school_journey")["time_from_school"])
                 except ValueError:
