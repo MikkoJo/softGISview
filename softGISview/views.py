@@ -17,6 +17,7 @@ from geojson_rest.models import Property
 from opensocial_people.models import Person
 
 import json
+import re
 from django.core.context_processors import request
 from django.utils.translation import ugettext as _
 
@@ -131,16 +132,26 @@ def school_data(request):
                     if "-" in u.json_data.get("school_journey")["time_from_school"]:
                         temp = u.json_data.get("school_journey")["time_from_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t1000 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
+                        t1000 += temp
                 try:
                     t1000 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
                     if "-" in u.json_data.get("school_journey")["time_to_school"]:
                         temp = u.json_data.get("school_journey")["time_to_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t1000 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
+                        t1000 += temp
         try:
             t1000 = t1000 / len(m1000_users)
         except ZeroDivisionError:
@@ -169,16 +180,26 @@ def school_data(request):
                     if "-" in u.json_data.get("school_journey")["time_from_school"]:
                         temp = u.json_data.get("school_journey")["time_from_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t3000 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
+                        t3000 += temp
                 try:
                     t3000 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
                     if "-" in u.json_data.get("school_journey")["time_to_school"]:
                         temp = u.json_data.get("school_journey")["time_to_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t3000 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
+                        t3000 += temp
         try:
             t3000 = t3000 / len(m3000_users)
         except ZeroDivisionError:
@@ -207,16 +228,26 @@ def school_data(request):
                     if "-" in u.json_data.get("school_journey")["time_from_school"]:
                         temp = u.json_data.get("school_journey")["time_from_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t5000 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
+                        t5000 += temp
                 try:
                     t5000 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
                     if "-" in u.json_data.get("school_journey")["time_to_school"]:
                         temp = u.json_data.get("school_journey")["time_to_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t5000 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
+                        t5000 += temp
         try:
             t5000 = t5000 / len(m5000_users)
         except ZeroDivisionError:
@@ -245,16 +276,26 @@ def school_data(request):
                     if "-" in u.json_data.get("school_journey")["time_from_school"]:
                         temp = u.json_data.get("school_journey")["time_from_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t5001 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
+                        t5001 += temp
                 try:
                     t5001 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
                     if "-" in u.json_data.get("school_journey")["time_to_school"]:
                         temp = u.json_data.get("school_journey")["time_to_school"].split("-")
                         if temp != None:
-                            temp = (float(temp[0]) + float(temp[1]))/2.0
+                            a =  re.sub('[^\d]+', '', temp[0])
+                            b =  re.sub('[^\d]+', '', temp[1])
+                            temp = (float(a) + float(b))/2.0
                             t5001 += temp
+                    else:
+                        temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
+                        t5001 += temp
         try:
             t5001 = t5001 / len(m5001_users)
         except ZeroDivisionError:
