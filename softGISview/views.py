@@ -138,7 +138,7 @@ def school_data(request):
                             t1000 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
-                        t1000 += temp
+                        t1000 += float(temp)
                 try:
                     t1000 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
@@ -151,7 +151,7 @@ def school_data(request):
                             t1000 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
-                        t1000 += temp
+                        t1000 += float(temp)
         try:
             t1000 = t1000 / len(m1000_users)
         except ZeroDivisionError:
@@ -186,7 +186,7 @@ def school_data(request):
                             t3000 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
-                        t3000 += temp
+                        t3000 += float(temp)
                 try:
                     t3000 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
@@ -199,7 +199,7 @@ def school_data(request):
                             t3000 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
-                        t3000 += temp
+                        t3000 += float(temp)
         try:
             t3000 = t3000 / len(m3000_users)
         except ZeroDivisionError:
@@ -234,7 +234,7 @@ def school_data(request):
                             t5000 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
-                        t5000 += temp
+                        t5000 += float(temp)
                 try:
                     t5000 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
@@ -247,7 +247,7 @@ def school_data(request):
                             t5000 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
-                        t5000 += temp
+                        t5000 += float(temp)
         try:
             t5000 = t5000 / len(m5000_users)
         except ZeroDivisionError:
@@ -282,7 +282,7 @@ def school_data(request):
                             t5001 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_from_school"])
-                        t5001 += temp
+                        t5001 += float(temp)
                 try:
                     t5001 += float(u.json_data.get("school_journey")["time_to_school"])
                 except ValueError:
@@ -295,7 +295,7 @@ def school_data(request):
                             t5001 += temp
                     else:
                         temp = re.sub('[^\d]+', '', u.json_data.get("school_journey")["time_to_school"])
-                        t5001 += temp
+                        t5001 += float(temp)
         try:
             t5001 = t5001 / len(m5001_users)
         except ZeroDivisionError:
