@@ -134,6 +134,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t1000 += temp
                     else:
@@ -148,6 +152,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t1000 += temp
                     else:
@@ -184,6 +192,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t3000 += temp
                     else:
@@ -198,6 +210,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t3000 += temp
                     else:
@@ -234,6 +250,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t5000 += temp
                     else:
@@ -248,6 +268,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t5000 += temp
                     else:
@@ -284,6 +308,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t5001 += temp
                     else:
@@ -298,6 +326,10 @@ def school_data(request):
                         if temp != None:
                             a =  re.sub('[^\d]+', '', temp[0])
                             b =  re.sub('[^\d]+', '', temp[1])
+                            if a == '':
+                                a = 0
+                            if b == '':
+                                b = 0
                             temp = (float(a) + float(b))/2.0
                             t5001 += temp
                     else:
