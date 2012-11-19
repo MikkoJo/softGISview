@@ -14,7 +14,7 @@ easy_install https://github.com/geonition/django_opensocial_people/tarball/2.0.x
 #easy_install https://github.com/geonition/django_opensocial_mediaitems/tarball/master
 #django_geonition_client
 easy_install https://github.com/geonition/django_geonition_client/tarball/2.0.x
-#data_processing
+#data_processing why this is removed
 #easy_install https://github.com/geonition/django_geojson_data_processing/tarball/1.0.x
 #geodjango maps
 easy_install https://github.com/geonition/geodjango-map-layers/tarball/4.0.0
